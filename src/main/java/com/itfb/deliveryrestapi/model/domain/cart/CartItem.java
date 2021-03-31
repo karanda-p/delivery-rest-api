@@ -1,11 +1,15 @@
 package com.itfb.deliveryrestapi.model.domain.cart;
 
 import com.itfb.deliveryrestapi.model.domain.Product;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cart_item")
+@Getter
+@Setter
 public class CartItem {
 
     @Id
@@ -23,4 +27,13 @@ public class CartItem {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cartId;
+
+    public CartItem() {
+    }
+
+    public CartItem(Product productId, int quantity, Cart cartId) {
+        this.productId = productId;
+        this.quantity = quantity;
+        this.cartId = cartId;
+    }
 }
