@@ -375,3 +375,10 @@ databaseChangeLog:
               - column:
                   name: name
                   value: Cheaseburger
+
+  - changeSet:
+      id: create_sequence
+      author: p.karanda
+      changes:
+        - createSequence:
+            sequenceName: seq

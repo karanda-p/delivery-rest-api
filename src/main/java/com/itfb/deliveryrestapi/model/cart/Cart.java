@@ -14,7 +14,9 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE
+            , generator = "seq")
+    @SequenceGenerator(name = "seq")
     private Long id;
 
     @Column(name = "customer_id")
@@ -30,7 +32,7 @@ public class Cart {
         this.customerId = customerId;
     }
 
-    public void addCartItemToCart(CartItem cartItem){
+    public void addCartItemToCart(CartItem cartItem) {
         if (cartItems == null) {
             cartItems = new ArrayList<>();
         }
