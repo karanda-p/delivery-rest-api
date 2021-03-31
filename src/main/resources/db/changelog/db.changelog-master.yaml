@@ -236,3 +236,32 @@ databaseChangeLog:
             oldColumnName: adress
             newColumnName: address
             tableName: order
+
+  - changeSet:
+      id: fill_restaurant_table
+      author: p.karanda
+      changes:
+        - insert:
+            tableName: restaurant
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: name
+                  value: McDonalds
+              - column:
+                  name: category
+                  value: Burgers
+        - insert:
+            tableName: restaurant
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: name
+                  value: Burger King
+              - column:
+                  name: category
+                  value: Burgers

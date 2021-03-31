@@ -1,10 +1,11 @@
 package com.itfb.deliveryrestapi.controller;
 
+import com.itfb.deliveryrestapi.model.Restaurant;
 import com.itfb.deliveryrestapi.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 
 @RestController
@@ -12,11 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RestaurantController {
 
-    private RestaurantService restaurantService;
+    private final RestaurantService restaurantService;
 
     @GetMapping
-    public String getAllRestaurants() {
-        return null;
+    public Collection<Restaurant> getAllRestaurants() {
+        return restaurantService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public Restaurant getRestaurantById(@PathVariable Long id){
+        return restaurantService.getById(id);
+    }
 }

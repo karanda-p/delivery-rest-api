@@ -18,6 +18,9 @@ public class Restaurant {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "category")
+    private String category;
+
     public Restaurant() {
     }
 
