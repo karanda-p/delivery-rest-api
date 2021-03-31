@@ -1,5 +1,6 @@
-package com.itfb.deliveryrestapi.model.cart;
+package com.itfb.deliveryrestapi.model.domain.cart;
 
+import com.itfb.deliveryrestapi.model.domain.Customer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,22 +15,16 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE
-            , generator = "seq")
-    @SequenceGenerator(name = "seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "customer_id")
-    private long customerId;
+    @OneToOne(mappedBy = "customer_id")
+    private Customer customer;
 
     @OneToMany(mappedBy = "cartId")
     private List<CartItem> cartItems;
 
     public Cart() {
-    }
-
-    public Cart(long customerId) {
-        this.customerId = customerId;
     }
 
     public void addCartItemToCart(CartItem cartItem) {

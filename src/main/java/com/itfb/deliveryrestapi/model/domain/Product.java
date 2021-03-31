@@ -1,4 +1,4 @@
-package com.itfb.deliveryrestapi.model;
+package com.itfb.deliveryrestapi.model.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +21,9 @@ public class Product {
 
     @Column(name = "price")
     private double price;
+
+    @Column(name = "name")
+    private String name;
 
     public Product() {
     }

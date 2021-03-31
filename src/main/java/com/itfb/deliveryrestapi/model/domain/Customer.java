@@ -1,5 +1,6 @@
-package com.itfb.deliveryrestapi.model;
+package com.itfb.deliveryrestapi.model.domain;
 
+import com.itfb.deliveryrestapi.model.domain.cart.Cart;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,9 @@ public class Customer {
 
     @Column(name = "phone")
     private String phone;
+
+    @OneToOne
+    private Cart cart;
 
     public Customer() {
     }

@@ -1,6 +1,6 @@
-package com.itfb.deliveryrestapi.model.cart;
+package com.itfb.deliveryrestapi.model.domain.cart;
 
-import com.itfb.deliveryrestapi.model.Product;
+import com.itfb.deliveryrestapi.model.domain.Product;
 
 import javax.persistence.*;
 
@@ -9,8 +9,7 @@ import javax.persistence.*;
 public class CartItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
-    @SequenceGenerator(sequenceName = "seq", name = "seq_gen")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne

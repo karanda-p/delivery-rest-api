@@ -1,7 +1,7 @@
 package com.itfb.deliveryrestapi.service;
 
-import com.itfb.deliveryrestapi.model.Product;
-import com.itfb.deliveryrestapi.model.Restaurant;
+import com.itfb.deliveryrestapi.model.domain.Product;
+import com.itfb.deliveryrestapi.model.domain.Restaurant;
 import com.itfb.deliveryrestapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

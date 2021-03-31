@@ -1,6 +1,6 @@
-package com.itfb.deliveryrestapi.model.order;
+package com.itfb.deliveryrestapi.model.domain.order;
 
-import com.itfb.deliveryrestapi.model.Product;
+import com.itfb.deliveryrestapi.model.domain.Product;
 import lombok.Getter;
 import lombok.Setter;
 

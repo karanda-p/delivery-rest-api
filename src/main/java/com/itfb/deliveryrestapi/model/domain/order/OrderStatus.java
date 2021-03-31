@@ -1,4 +1,4 @@
-package com.itfb.deliveryrestapi.model.order;
+package com.itfb.deliveryrestapi.model.domain.order;
 
 public enum OrderStatus {
 

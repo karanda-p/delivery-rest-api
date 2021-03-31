@@ -1,7 +1,7 @@
 package com.itfb.deliveryrestapi.controller;
 
-import com.itfb.deliveryrestapi.model.Product;
-import com.itfb.deliveryrestapi.model.Restaurant;
+import com.itfb.deliveryrestapi.model.domain.Product;
+import com.itfb.deliveryrestapi.model.domain.Restaurant;
 import com.itfb.deliveryrestapi.service.ProductService;
 import com.itfb.deliveryrestapi.service.RestaurantService;
 import lombok.RequiredArgsConstructor;

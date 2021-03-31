@@ -1,4 +1,4 @@
-package com.itfb.deliveryrestapi.model;
+package com.itfb.deliveryrestapi.model.domain;
 
 import lombok.Getter;
 import lombok.Setter;

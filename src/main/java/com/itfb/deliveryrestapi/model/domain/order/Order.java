@@ -1,7 +1,7 @@
-package com.itfb.deliveryrestapi.model.order;
+package com.itfb.deliveryrestapi.model.domain.order;
 
-import com.itfb.deliveryrestapi.model.Customer;
-import com.itfb.deliveryrestapi.model.Restaurant;
+import com.itfb.deliveryrestapi.model.domain.Customer;
+import com.itfb.deliveryrestapi.model.domain.Restaurant;
 import lombok.Getter;
 import lombok.Setter;
 
