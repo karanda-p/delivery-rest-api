@@ -1,7 +1,7 @@
 package com.itfb.deliveryrestapi.repository;
 
-import com.itfb.deliveryrestapi.model.Product;
-import com.itfb.deliveryrestapi.model.Restaurant;
+import com.itfb.deliveryrestapi.model.domain.Product;
+import com.itfb.deliveryrestapi.model.domain.Restaurant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
