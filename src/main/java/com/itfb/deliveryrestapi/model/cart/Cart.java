@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,5 +28,12 @@ public class Cart {
 
     public Cart(long customerId) {
         this.customerId = customerId;
+    }
+
+    public void addCartItemToCart(CartItem cartItem){
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
+        cartItems.add(cartItem);
     }
 }
