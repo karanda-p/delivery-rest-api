@@ -265,3 +265,113 @@ databaseChangeLog:
               - column:
                   name: category
                   value: Burgers
+
+  - changeSet:
+      id: add_column_name_to_product_table
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: product
+            columns:
+              name: name
+              type: varchar(128)
+
+  - changeSet:
+      id: fill_product_table
+      author: p.karanda
+      changes:
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: restaurant_id
+                  valueNumeric: 1
+              - column:
+                  name: price
+                  valueNumeric: 135
+              - column:
+                  name: name
+                  value: Big Mac
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: restaurant_id
+                  valueNumeric: 1
+              - column:
+                  name: price
+                  valueNumeric: 45
+              - column:
+                  name: name
+                  value: Hamburger
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: restaurant_id
+                  valueNumeric: 1
+              - column:
+                  name: price
+                  valueNumeric: 55
+              - column:
+                  name: name
+                  value: Cheaseburger
+
+  - changeSet:
+      id: fill_product_table_another
+      author: p.karanda
+      changes:
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 4
+              - column:
+                  name: restaurant_id
+                  valueNumeric: 2
+              - column:
+                  name: price
+                  valueNumeric: 135
+              - column:
+                  name: name
+                  value: Vopper
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 5
+              - column:
+                  name: restaurant_id
+                  valueNumeric: 2
+              - column:
+                  name: price
+                  valueNumeric: 45
+              - column:
+                  name: name
+                  value: Double Vopper
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 6
+              - column:
+                  name: restaurant_id
+                  valueNumeric: 2
+              - column:
+                  name: price
+                  valueNumeric: 55
+              - column:
+                  name: name
+                  value: Cheaseburger
