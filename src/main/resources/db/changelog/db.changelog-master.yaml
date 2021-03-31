@@ -1,0 +1,229 @@
+databaseChangeLog:
+  - logicalFilePath: db/chanhelog/db.changelog-master.yaml
+  - changeSet:
+      id: create_customer_table
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: customer
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(50)
+              - column:
+                  name: password
+                  type: varchar(50)
+              - column:
+                  name: phone
+                  type: varchar(15)
+
+  - changeSet:
+      id: create_order_table
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: order
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: customer_id
+                  type: BIGINT
+              - column:
+                  name: restaurant_id
+                  type: BIGINT
+              - column:
+                  name: adress
+                  type: varchar(64)
+              - column:
+                  name: status
+                  type: varchar(30)
+              - column:
+                  name: creation_date
+                  type: varchar(50)
+              - column:
+                  name: done_date
+                  type: varchar(50)
+              - column:
+                  name: amount
+                  type: numeric
+              - column:
+                  name: cart_id
+                  type: BIGINT
+
+  - changeSet:
+      id: create_order_item
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: order_item
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: BIGINT
+              - column:
+                  name: quantity
+                  type: int
+              - column:
+                  name: order_id
+                  type: BIGINT
+
+  - changeSet:
+      id: create_cart
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: cart
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: fasle
+              - column:
+                  name: customer_id
+                  type: BIGINT
+
+  - changeSet:
+      id: create_cart_item
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: cart_item
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: BIGINT
+              - column:
+                  name: quantity
+                  type: int
+              - column:
+                  name: cart_id
+                  type: BIGINT
+
+  - changeSet:
+      id: create_product
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: restaurant_id
+                  type: BIGINT
+              - column:
+                  name: price
+                  type: numeric
+
+  - changeSet:
+      id: create_restaurant
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: restaurant
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+              - column:
+                  name: category
+                  type: varchar(30)
+
+  - changeSet:
+      id: add_fk_to_order_table
+      author: p.karanda
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: order
+            constraintName: fk_order_customer_id
+            referencedTableName: customer
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseColumnNames: restaurant_id
+            baseTableName: order
+            constraintName: fk_order_restaurant_id
+            referencedTableName: restaurant
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            baseColumnNames: cart_id
+            baseTableName: order
+            constraintName: fk_order_cart_id
+            referencedTableName: cart
+            referencedColumnNames: id
+
+  - changeSet:
+      id: add_fk_to_cart_table
+      author: p.karanda
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: cart
+            constraintName: fk_cart_customer_id
+            referencedTableName: customer
+            referencedColumnNames: id
+
+  - changeSet:
+      id: add_fk_to_cart_item_table
+      author: p.karanda
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: cart_item
+            constraintName: fk_cart_item_product_id
+            referencedTableName: product
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseColumnNames: cart_id
+            baseTableName: cart_item
+            constraintName: fk_cart_item_cart_id
+            referencedTableName: cart
+            referencedColumnNames: id
+
+  - changeSet:
+      id: add_fk_to_product_table
+      author: p.karanda
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: restaurant_id
+            baseTableName: product
+            constraintName: fk_product_restaurant_id
+            referencedTableName: restaurant
+            referencedColumnNames: id
