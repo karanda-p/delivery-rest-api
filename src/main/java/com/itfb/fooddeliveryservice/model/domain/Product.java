@@ -18,7 +18,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurant;
+    private Restaurant restaurantId;
 
     @Column(name = "price")
     private double price;
@@ -30,7 +30,7 @@ public class Product {
     }
 
     public Product(Restaurant restaurant, double price, String name) {
-        this.restaurant = restaurant;
+        this.restaurantId = restaurant;
         this.price = price;
         this.name = name;
     }

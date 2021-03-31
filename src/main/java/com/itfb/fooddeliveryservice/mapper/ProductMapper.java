@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper
-public interface ProductMapper extends BaseMapper<Product, ProductDTO> {
+public interface ProductMapper {
 
     @Mapping(source = "restaurant.id", target = "restaurantId")
     ProductDTO domainToDTO(Product domain);

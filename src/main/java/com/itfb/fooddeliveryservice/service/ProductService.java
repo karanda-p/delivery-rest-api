@@ -17,4 +17,5 @@ public class ProductService {
     public Collection<Product> getAllProductsByRestaurant(Restaurant restaurant){
         return productRepository.getAllByRestaurantId(restaurant);
     }
+
 }
