@@ -29,8 +29,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(Restaurant restaurantId, double price) {
+    public Product(Restaurant restaurantId, double price, String name) {
         this.restaurantId = restaurantId;
         this.price = price;
+        this.name = name;
     }
 }
