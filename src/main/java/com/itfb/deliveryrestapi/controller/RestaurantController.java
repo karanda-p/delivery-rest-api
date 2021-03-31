@@ -17,6 +17,7 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
     private final ProductService productService;
+//    private final ProductMapper productMapper;
 
     @GetMapping
     public Collection<Restaurant> getAllRestaurants() {
@@ -31,6 +32,7 @@ public class RestaurantController {
     @GetMapping("/{id}/products")
     public Collection<Product> getAllRestaurantProducts(@PathVariable Long id){
         Restaurant restaurant = restaurantService.getById(id);
+//        return productMapper.domainsToDtos(productService.getAllProductsByRestaurant(restaurant));
         return productService.getAllProductsByRestaurant(restaurant);
     }
 }

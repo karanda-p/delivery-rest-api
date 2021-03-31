@@ -1,4 +1,4 @@
-package com.itfb.deliveryrestapi.model.domain.dto;
+package com.itfb.deliveryrestapi.model.dto;
 
 public class ProductDTO {
 

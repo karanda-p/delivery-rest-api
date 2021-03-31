@@ -15,13 +15,14 @@ import java.util.List;
 public class Cart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(sequenceName = "cart_seq", name = "cart_id_gen", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_id_gen")
     private Long id;
 
-    @OneToOne(mappedBy = "customer_id")
+    @OneToOne(mappedBy = "cart")
     private Customer customer;
 
-    @OneToMany(mappedBy = "cartId")
+    @OneToMany
     private List<CartItem> cartItems;
 
     public Cart() {

@@ -12,7 +12,8 @@ import javax.persistence.*;
 public class Restaurant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(sequenceName = "restaurant_seq", name = "restaurant_id_gen",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurant_id_gen")
     private Long id;
 
     @Column(name = "name")
