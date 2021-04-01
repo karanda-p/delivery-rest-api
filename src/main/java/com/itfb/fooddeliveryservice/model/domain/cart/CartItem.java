@@ -34,6 +34,8 @@ public class CartItem {
     @Column(name = "cart_id", insertable = false, updatable = false)
     private Long cartId;
 
+    private double amount;
+
     public CartItem() {
     }
 

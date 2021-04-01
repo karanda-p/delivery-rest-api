@@ -19,14 +19,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_id_gen")
     private Long id;
 
-    @OneToOne(mappedBy = "cart")
-    private Customer customer;
-
-    @Column(name = "customer_id", insertable = false, updatable = false)
-    private Long customerId;
-
     @OneToMany
     private List<CartItem> cartItems;
+
+    @Column(name = "creation_date")
+    private String creationDate;
 
     public Cart() {
     }

@@ -394,3 +394,37 @@ databaseChangeLog:
             sequenceName: order_item_seq
         - createSequence:
             sequenceName: product_seq
+
+  - changeSet:
+      id: add_cart_id_column_to_customer_table
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: customer
+            column:
+              name: cart_id
+              type: BIGINT
+        - addForeignKeyConstraint:
+            baseColumnNames: cart_id
+            baseTableName: customer
+            constraintName: fk_customer_cart_id
+            referencedTableName: cart
+            referencedColumnNames: id
+
+  - changeSet:
+      id: delete_column_customer_id_from_cart_table
+      author: p.karanda
+      changes:
+        - dropColumn:
+            columnName: customer_id
+            tableName: cart
+
+  - changeSet:
+      id: add_creation_date_column_to_cart_table
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: cart
+            column:
+              name: creation_date
+              type: varchar(50)
