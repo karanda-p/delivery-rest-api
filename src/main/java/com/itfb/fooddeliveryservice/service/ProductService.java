@@ -14,8 +14,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Collection<Product> getAllProductsByRestaurant(Restaurant restaurant){
-        return productRepository.getAllByRestaurantId(restaurant);
+    public Collection<Product> getAllProductsByRestaurant(Long restaurantId){
+        return productRepository.findAllByRestaurantId(restaurantId);
     }
 
 }

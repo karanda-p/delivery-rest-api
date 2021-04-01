@@ -10,5 +10,5 @@ import java.util.Collection;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Collection<Product> getAllByRestaurantId(Restaurant restaurant);
+    Collection<Product> findAllByRestaurantId(Long restaurantId);
 }

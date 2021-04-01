@@ -32,7 +32,7 @@ public class RestaurantController {
     public Collection<Product> getAllRestaurantProducts(@PathVariable Long id){
         Restaurant restaurant = restaurantService.getById(id);
 //        return productMapper.domainsToDtos(productService.getAllProductsByRestaurant(restaurant));
-        return productService.getAllProductsByRestaurant(restaurant);
+        return productService.getAllProductsByRestaurant(restaurant.getId());
     }
 
 

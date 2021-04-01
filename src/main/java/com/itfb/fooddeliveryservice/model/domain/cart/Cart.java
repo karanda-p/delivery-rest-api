@@ -22,6 +22,9 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     private Customer customer;
 
+    @Column(name = "customer_id", insertable = false, updatable = false)
+    private Long customerId;
+
     @OneToMany
     private List<CartItem> cartItems;
 

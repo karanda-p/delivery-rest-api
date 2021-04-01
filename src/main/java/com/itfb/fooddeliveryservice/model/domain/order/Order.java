@@ -22,11 +22,17 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customerId;
+    private Customer customer;
+
+    @Column(name = "customer_id", insertable = false, updatable = false)
+    private Long customerId;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
-    private Restaurant restaurantId;
+    private Restaurant restaurant;
+
+    @Column(name = "restaurant_id", insertable = false, updatable = false)
+    private Long restaurantId;
 
     @Column(name = "address")
     private String address;
@@ -49,7 +55,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Customer customerId, Restaurant restaurantId, String address, OrderStatus status, String creationDate, String doneDate, double amount) {
+    public Order(Long customerId, Long restaurantId, String address, OrderStatus status, String creationDate, String doneDate, double amount) {
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.address = address;

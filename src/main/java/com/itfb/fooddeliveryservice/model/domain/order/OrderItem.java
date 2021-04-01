@@ -19,19 +19,25 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product productId;
+    private Product product;
+
+    @Column(name = "product_id", insertable = false, updatable = false)
+    private Long productId;
 
     @Column(name = "quantity")
     private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order orderId;
+    private Order order;
+
+    @Column(name = "order_id", insertable = false, updatable = false)
+    private Long orderId;
 
     public OrderItem() {
     }
 
-    public OrderItem(Product productId, int quantity, Order orderId) {
+    public OrderItem(Long productId, int quantity, Long orderId) {
         this.productId = productId;
         this.quantity = quantity;
         this.orderId = orderId;
