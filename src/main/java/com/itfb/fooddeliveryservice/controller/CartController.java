@@ -9,9 +9,13 @@ import com.itfb.fooddeliveryservice.model.dto.CartItemDTO;
 import com.itfb.fooddeliveryservice.service.CartItemService;
 import com.itfb.fooddeliveryservice.service.CartService;
 import com.itfb.fooddeliveryservice.service.CustomerService;
+import liquibase.pro.packaged.D;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.resource.HttpResource;
 
+import java.net.http.HttpResponse;
 import java.util.Collection;
 
 @RestController
@@ -54,5 +58,13 @@ public class CartController {
     public void deleteCartByLogin(@PathVariable String customersLogin) {
         customerService.getCustomerByLogin(customersLogin).get().setCart(null);
         cartService.deleteCartById(customerService.getCustomerByLogin(customersLogin).get().getCartId());
+    }
+
+
+    @DeleteMapping("/{customersLogin}/cart/items")
+    public void deleteCartItemFromCart(@PathVariable String customersLogin, @RequestBody CartItem cartItem){
+        Customer customer = customerService.getCustomerByLogin(customersLogin).get();
+        customer.getCart().getCartItems().remove(cartItem);
+        customerService.saveOrUpdateCustomer(customer);
     }
 }
