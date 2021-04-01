@@ -5,9 +5,10 @@ import com.itfb.fooddeliveryservice.model.dto.ProductDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ProductMapper extends BaseMapper<Product, ProductDTO>{
 
-    @Mapping(source = "restaurant.id", target = "restaurantId")
-    ProductDTO domainToDTO(Product domain);
+    @Override
+    @Mapping(source = "domain.restaurantId", target = "restaurantId")
+    ProductDTO domainToDto(Product domain);
 }

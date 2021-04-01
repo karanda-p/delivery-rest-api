@@ -3,10 +3,9 @@ package com.itfb.fooddeliveryservice.model.dto;
 import lombok.Data;
 
 @Data
-public class ProductDTO {
+public class RestaurantDTO {
 
     private Long id;
-    private Long restaurantId;
-    private double price;
     private String name;
+    private String category;
 }
