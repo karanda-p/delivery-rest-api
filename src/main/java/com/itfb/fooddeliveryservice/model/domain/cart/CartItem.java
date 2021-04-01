@@ -34,21 +34,14 @@ public class CartItem {
     @Column(name = "cart_id", insertable = false, updatable = false)
     private Long cartId;
 
-    private double amount;
+//    private double amount;
 
     public CartItem() {
     }
 
-    public CartItem(Long productId, int quantity, Long cartId) {
-        this.productId = productId;
+    public CartItem(Product product, int quantity) {
+        this.product = product;
         this.quantity = quantity;
-        this.cartId = cartId;
     }
 
-    public CartItem(Product product){
-        this.quantity = 1;
-        this.productId = product.getId();
-        this.amount = quantity * product.getPrice();
-        this.product = product;
-    }
 }

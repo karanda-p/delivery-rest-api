@@ -13,7 +13,11 @@ public class CartItemService {
 
     private final CartItemRepository cartItemRepository;
 
-    Collection<CartItem> findAllCartItemsByCartId(Long cartId){
+    public Collection<CartItem> findAllCartItemsByCartId(Long cartId){
         return cartItemRepository.findAllByCartId(cartId);
+    }
+
+    public void saveOrUpdateCartItem(CartItem cartItem){
+        cartItemRepository.save(cartItem);
     }
 }

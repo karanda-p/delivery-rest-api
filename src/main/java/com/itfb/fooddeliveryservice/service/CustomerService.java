@@ -13,7 +13,7 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public void addCustomer(Customer customer){
+    public void saveOrUpdateCustomer(Customer customer){
         customerRepository.save(customer);
     }
 

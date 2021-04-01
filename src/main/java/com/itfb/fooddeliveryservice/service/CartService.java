@@ -16,4 +16,12 @@ public class CartService {
     public Optional<Cart> findCartById(Long id) {
         return cartRepository.findById(id);
     }
+
+    public void deleteCartById(Long id){
+        cartRepository.deleteById(id);
+    }
+
+    public void saveOrUpdateCart(Cart cart){
+        cartRepository.save(cart);
+    }
 }

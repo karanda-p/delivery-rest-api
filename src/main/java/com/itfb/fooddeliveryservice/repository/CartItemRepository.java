@@ -10,4 +10,5 @@ import java.util.Collection;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     Collection<CartItem> findAllByCartId(Long cartId);
+
 }

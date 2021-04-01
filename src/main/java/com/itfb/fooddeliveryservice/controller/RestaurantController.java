@@ -39,7 +39,6 @@ public class RestaurantController {
         return productMapper.domainsToDtos(productService.getAllProductsByRestaurant(id));
     }
 
-
     @GetMapping("/{id}/products/{productId}")
     public ProductDTO getProduct(@PathVariable Long productId) {
         return productMapper.domainToDto(productService.getProductById(productId).get());
