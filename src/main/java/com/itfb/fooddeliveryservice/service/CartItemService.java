@@ -1,6 +1,5 @@
 package com.itfb.fooddeliveryservice.service;
 
-import com.itfb.fooddeliveryservice.model.domain.cart.Cart;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;

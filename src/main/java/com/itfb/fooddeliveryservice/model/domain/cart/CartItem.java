@@ -44,4 +44,11 @@ public class CartItem {
         this.quantity = quantity;
         this.cartId = cartId;
     }
+
+    public CartItem(Product product){
+        this.quantity = 1;
+        this.productId = product.getId();
+        this.amount = quantity * product.getPrice();
+        this.product = product;
+    }
 }
