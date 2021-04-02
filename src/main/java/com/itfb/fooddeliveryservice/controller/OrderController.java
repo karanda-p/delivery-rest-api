@@ -48,8 +48,8 @@ public class OrderController {
         }
         double amount = 0D;
         for (OrderItem orderItem : order.getOrderItems()) {
-            orderItem.setOrder(order);
-            orderItemService.saveOrderItem(orderItem);
+//            orderItem.setOrder(order);
+//            orderItemService.saveOrderItem(orderItem);
             amount += orderItem.getProduct().getPrice();
         }
         order.setAmount(amount);
@@ -61,6 +61,9 @@ public class OrderController {
         order.setStatus(OrderStatus.IN_PROGRESS);
         order.setCreationDate(LocalDate.now().toString());
         Order savedOrder = orderService.saveOrder(order);
+        for (OrderItem orderItem: order.getOrderItems()){
+            orderItem.setOrder(order);
+        }
         cartService.deleteCartById(customer.getCartId());
         customer.setCart(null);
         customerService.saveOrUpdateCustomer(customer);
