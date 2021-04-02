@@ -13,10 +13,13 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>delivery-rest-api</name>
     <description>Demo project for Spring Boot</description>
+
     <properties>
         <java.version>11</java.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <snakeyaml.version>1.28</snakeyaml.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,7 +58,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.28</version>
+            <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>

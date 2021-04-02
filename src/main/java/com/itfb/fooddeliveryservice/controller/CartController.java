@@ -40,12 +40,11 @@ public class CartController {
         if (customer.getCart() == null) {
             Cart cart = new Cart();
             customer.setCart(cart);
-            cartService.saveOrUpdateCart(cart);
+            customerService.saveOrUpdateCustomer(customer);
         }
         CartItem cartItem = new CartItem(product, 1);
         customer.getCart().addCartItemToCart(cartItem);
         cartItem.setCart(customer.getCart());
-        customerService.saveOrUpdateCustomer(customer);
         CartItem savedCartItem = cartItemService.saveOrUpdateCartItem(cartItem);
         return cartItemMapper.domainToDto(savedCartItem);
     }

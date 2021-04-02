@@ -8,9 +8,7 @@ import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderItem;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
-import com.itfb.fooddeliveryservice.service.CartItemService;
-import com.itfb.fooddeliveryservice.service.CustomerService;
-import com.itfb.fooddeliveryservice.service.OrderService;
+import com.itfb.fooddeliveryservice.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,28 +24,35 @@ public class OrderController {
     private final OrderService orderService;
     private final CustomerService customerService;
     private final CartItemService cartItemService;
+    private final CartService cartService;
     private final CartItemToOrderItemMapper cartItemToOrderItemMapper;
+    private final OrderItemService orderItemService;
 
     @GetMapping("/{customerId}/orders")
-    public Collection<OrderDTO> getAllOrdersByCustomerId(@PathVariable Long customerId){
+    public Collection<OrderDTO> getAllOrdersByCustomerId(@PathVariable Long customerId) {
         return orderMapper.domainsToDtos(orderService.getAllOrdersByCustomerId(customerId));
     }
 
     @GetMapping("/{customerId}/orders/{orderId}")
-    public OrderDTO getOrderById(@PathVariable Long orderId){
+    public OrderDTO getOrderById(@PathVariable Long orderId) {
         return orderMapper.domainToDto(orderService.getOrderById(orderId).get());
     }
 
-    @PostMapping("/{customerId}/orders")
-    public OrderDTO createOrder(@PathVariable Long customerId, @RequestBody Order order){
+    @PostMapping("/{customerId}/orders/")
+    public @ResponseBody OrderDTO createOrder(@PathVariable Long customerId
+            , @RequestBody Order order) {
         Customer customer = customerService.getCustomerById(customerId).get();
         order.setCustomer(customer);
-        for (CartItem cartItem: customer.getCart().getCartItems()) {
+        for (CartItem cartItem : customer.getCart().getCartItems()) {
             order.addOrderItemToOrder(cartItemToOrderItemMapper.cartItemToOrderItem(cartItem));
         }
-        for (OrderItem orderItem: order.getOrderItems()){
+        double amount = 0D;
+        for (OrderItem orderItem : order.getOrderItems()) {
             orderItem.setOrder(order);
+            orderItemService.saveOrderItem(orderItem);
+            amount += orderItem.getProduct().getPrice();
         }
+        order.setAmount(amount);
         order.setRestaurant(order.getOrderItems()
                 .get(0)
                 .getProduct()
@@ -55,6 +60,10 @@ public class OrderController {
 
         order.setStatus(OrderStatus.IN_PROGRESS);
         order.setCreationDate(LocalDate.now().toString());
-        return null;
+        Order savedOrder = orderService.saveOrder(order);
+        cartService.deleteCartById(customer.getCartId());
+        customer.setCart(null);
+        customerService.saveOrUpdateCustomer(customer);
+        return orderMapper.domainToDto(savedOrder);
     }
 }
