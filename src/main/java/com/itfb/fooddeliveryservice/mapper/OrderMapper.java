@@ -5,7 +5,7 @@ import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderMapper extends BaseMapper<Order, OrderDTO> {
 
     @Mapping(source = "domain.status.value", target = "status")

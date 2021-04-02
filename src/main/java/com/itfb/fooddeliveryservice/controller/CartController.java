@@ -46,8 +46,8 @@ public class CartController {
         customer.getCart().addCartItemToCart(cartItem);
         cartItem.setCart(customer.getCart());
         customerService.saveOrUpdateCustomer(customer);
-        cartItemService.saveOrUpdateCartItem(cartItem);
-        return cartItemMapper.domainToDto(cartItem);
+        CartItem savedCartItem = cartItemService.saveOrUpdateCartItem(cartItem);
+        return cartItemMapper.domainToDto(savedCartItem);
     }
 
     @DeleteMapping("/{customersId}/cart")

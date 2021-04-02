@@ -21,4 +21,8 @@ public class OrderService {
     public Collection<Order> getAllOrdersByCustomerId(Long customerId){
         return orderRepository.getAllByCustomerId(customerId);
     }
+
+    public Order saveOrder(Order order){
+        return orderRepository.save(order);
+    }
 }

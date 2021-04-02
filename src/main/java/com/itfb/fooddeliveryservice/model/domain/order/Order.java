@@ -50,7 +50,7 @@ public class Order {
     private double amount;
 
     @OneToMany(mappedBy = "orderId")
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public Order() {
     }
@@ -66,9 +66,6 @@ public class Order {
     }
 
     public void addOrderItemToOrder(OrderItem orderItem) {
-        if (orderItems == null) {
-            orderItems = new ArrayList<>();
-        }
         orderItems.add(orderItem);
     }
 }

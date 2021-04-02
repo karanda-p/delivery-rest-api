@@ -21,8 +21,8 @@ public class CustomerController {
 
     @PostMapping
     public CustomerDTO addCustomer(@RequestBody Customer customer){
-        customerService.saveOrUpdateCustomer(customer);
-        return customerMapper.domainToDto(customer);
+        Customer savedCustomer = customerService.saveOrUpdateCustomer(customer);
+        return customerMapper.domainToDto(savedCustomer);
     }
 
     @GetMapping("/{customerId}")

@@ -17,7 +17,7 @@ public class CartItemService {
         return cartItemRepository.findAllByCartId(cartId);
     }
 
-    public void saveOrUpdateCartItem(CartItem cartItem){
-        cartItemRepository.save(cartItem);
+    public CartItem saveOrUpdateCartItem(CartItem cartItem){
+        return cartItemRepository.save(cartItem);
     }
 }

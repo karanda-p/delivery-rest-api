@@ -13,8 +13,8 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public void saveOrUpdateCustomer(Customer customer){
-        customerRepository.save(customer);
+    public Customer saveOrUpdateCustomer(Customer customer){
+        return customerRepository.save(customer);
     }
 
     public Optional<Customer> getCustomerByLogin(String login){
