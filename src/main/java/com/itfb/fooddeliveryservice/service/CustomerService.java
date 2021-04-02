@@ -21,4 +21,7 @@ public class CustomerService {
         return customerRepository.findCustomerByLogin(login);
     }
 
+    public Optional<Customer> getCustomerById(Long id){
+        return customerRepository.findById(id);
+    }
 }

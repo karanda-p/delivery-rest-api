@@ -5,7 +5,11 @@ import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.dto.CustomerDTO;
 import com.itfb.fooddeliveryservice.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/customers")
@@ -21,9 +25,12 @@ public class CustomerController {
         return customerMapper.domainToDto(customer);
     }
 
-    @GetMapping("/{login}")
-    public CustomerDTO getCustomerByLogin(@PathVariable String login){
-
-        return customerMapper.domainToDto(customerService.getCustomerByLogin(login).get());
+    @GetMapping("/{customerId}")
+    public CustomerDTO getCustomerByLogin(@PathVariable Long customerId, HttpServletResponse resp){
+        if (customerService.getCustomerById(customerId).isPresent()){
+            return customerMapper.domainToDto(customerService.getCustomerById(customerId).get());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
+        }
     }
 }
