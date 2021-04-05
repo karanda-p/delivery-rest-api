@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cart_id_gen")
     private Long id;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<CartItem> cartItems = new ArrayList<>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems;
 
     @Column(name = "creation_date")
     private String creationDate;
@@ -32,6 +33,9 @@ public class Cart {
     }
 
     public void addCartItemToCart(CartItem cartItem) {
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
         cartItems.add(cartItem);
     }
 }

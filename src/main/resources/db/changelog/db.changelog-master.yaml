@@ -452,3 +452,18 @@ databaseChangeLog:
         - addUniqueConstraint:
             tableName: customer
             columnNames: login, phone
+
+  - changeSet:
+      id: add_columns_to_customer_table
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: customer
+            column:
+              name: enabled
+              type: boolean
+        - addColumn:
+            tableName: customer
+            column:
+              name: authority
+              type: varchar(50)

@@ -22,8 +22,7 @@ public class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO addCustomer(@RequestBody Customer customer){
-        Customer savedCustomer = customerService.saveOrUpdateCustomer(customer);
-        return customerMapper.domainToDto(savedCustomer);
+        return customerMapper.domainToDto(customerService.saveOrUpdateCustomer(customer));
     }
 
     @GetMapping("/{customerId}")
@@ -37,7 +36,6 @@ public class CustomerController {
 
     @PutMapping
     public CustomerDTO updateCustomer(@RequestBody Customer customer){
-        Customer savedCustomer = customerService.saveOrUpdateCustomer(customer);
-        return customerMapper.domainToDto(savedCustomer);
+        return customerMapper.domainToDto(customerService.saveOrUpdateCustomer(customer));
     }
 }

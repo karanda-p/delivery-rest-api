@@ -42,42 +42,13 @@ public class OrderController {
     @PostMapping("/{customerId}/orders")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    OrderDTO createOrder(@PathVariable Long customerId
-            , @RequestBody Order order) {
-        Customer customer = customerService.getCustomerById(customerId).get();
-        order.setCustomer(customer);
-        for (CartItem cartItem : customer.getCart().getCartItems()) {
-            order.addOrderItemToOrder(cartItemToOrderItemMapper.cartItemToOrderItem(cartItem));
-        }
-        double amount = 0D;
-        for (OrderItem orderItem : order.getOrderItems()) {
-            amount += orderItem.getProduct().getPrice() * orderItem.getQuantity();
-        }
-        order.setAmount(amount);
-        order.setRestaurant(order.getOrderItems()
-                .get(0)
-                .getProduct()
-                .getRestaurant());
-        order.setStatus(OrderStatus.IN_PROGRESS);
-        order.setCreationDate(LocalDate.now().toString());
-        Order savedOrder = orderService.saveOrder(order);
-        for (OrderItem orderItem : order.getOrderItems()) {
-            orderItem.setOrder(order);
-        }
-        customer.getCart().setCartItems(null);
-        cartItemService.deleteAllCartItemsByCartId(customer.getCartId());
-        customer.setCart(null);
-        cartService.deleteCartById(customer.getCartId());
-        customerService.saveOrUpdateCustomer(customer);
-        return orderMapper.domainToDto(savedOrder);
+    OrderDTO createOrder(@PathVariable Long customerId, @RequestBody Order order) {
+        return orderMapper.domainToDto(orderService.createNewOrder(customerId,order));
     }
-    
+
     //Change order status
     @PutMapping("/{customerId}/orders")
-    public OrderDTO doneOrderByRestaurant(@RequestBody Order order){
-        Order newOrder = orderService.getOrderById(order.getId()).get();
-        newOrder.setStatus(order.getStatus());
-        Order savedOrder = orderService.saveOrder(newOrder);
-        return orderMapper.domainToDto(savedOrder);
+    public OrderDTO changeOrderStatus(@RequestBody Order order){
+        return orderMapper.domainToDto(orderService.changeOrderStatus(order));
     }
 }

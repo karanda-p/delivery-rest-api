@@ -20,10 +20,10 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final CartItemService cartItemService;
     private final CartItemMapper cartItemMapper;
     private final CartService cartService;
     private final CustomerService customerService;
+    private final CartItemService cartItemService;
 
     @GetMapping("/{customersId}/cart/items")
     public Collection<CartItemDTO> getAllCartItemsByCustomerId(@PathVariable Long customersId) {
@@ -34,42 +34,22 @@ public class CartController {
                 .getCartItems());
     }
 
-    @PostMapping("/{customersId}/cart/items")
+    @PostMapping("/{customerId}/cart/items")
     @ResponseStatus(HttpStatus.CREATED)
-    public CartItemDTO addProductToCart(@RequestBody Product product, @PathVariable Long customersId) {
-        Customer customer = customerService.getCustomerById(customersId).get();
-        if (customer.getCart() == null) {
-            Cart cart = new Cart();
-            customer.setCart(cart);
-            customerService.saveOrUpdateCustomer(customer);
-        }
-        CartItem cartItem = new CartItem(product, 1);
-        for (CartItem item : customer.getCart().getCartItems()) {
-            if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
-                item.setQuantity(item.getQuantity() + 1);
-                CartItem savedItem = cartItemService.saveOrUpdateCartItem(item);
-                return cartItemMapper.domainToDto(savedItem);
-            }
-        }
-
-        customer.getCart().addCartItemToCart(cartItem);
-        cartItem.setCart(customer.getCart());
-        CartItem savedCartItem = cartItemService.saveOrUpdateCartItem(cartItem);
-        return cartItemMapper.domainToDto(savedCartItem);
+    public CartItemDTO addProductToCart(@RequestBody Product product, @PathVariable Long customerId) {
+        return cartItemMapper.domainToDto(cartService.addProductToCart(product, customerId));
     }
 
-    @DeleteMapping("/{customersId}/cart")
+    @DeleteMapping("/{customerId}/cart")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCartByLogin(@PathVariable Long customersId) {
-        customerService.getCustomerById(customersId).get().setCart(null);
-        cartService.deleteCartById(customerService.getCustomerById(customersId).get().getCartId());
+    public void deleteCartByLogin(@PathVariable Long customerId) {
+        customerService.getCustomerById(customerId).get().setCart(null);
+        cartService.deleteCartById(customerService.getCustomerById(customerId).get().getCartId());
     }
 
-    @DeleteMapping("/{customersId}/cart/items")
+    @DeleteMapping("/{customerId}/cart/items")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCartItemFromCart(@PathVariable Long customersId, @RequestBody CartItem cartItem) {
-        Customer customer = customerService.getCustomerById(customersId).get();
-        customer.getCart().getCartItems().remove(cartItem);
-        customerService.saveOrUpdateCustomer(customer);
+    public void deleteCartItemFromCart(@PathVariable Long customerId, @RequestBody CartItem cartItem) {
+        cartItemService.deleteCartItemFromCart(customerId, cartItem);
     }
 }
