@@ -20,6 +20,7 @@ public class CustomerController {
     private final CustomerMapper customerMapper;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CustomerDTO addCustomer(@RequestBody Customer customer){
         Customer savedCustomer = customerService.saveOrUpdateCustomer(customer);
         return customerMapper.domainToDto(savedCustomer);
@@ -32,5 +33,11 @@ public class CustomerController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
         }
+    }
+
+    @PutMapping
+    public CustomerDTO updateCustomer(@RequestBody Customer customer){
+        Customer savedCustomer = customerService.saveOrUpdateCustomer(customer);
+        return customerMapper.domainToDto(savedCustomer);
     }
 }

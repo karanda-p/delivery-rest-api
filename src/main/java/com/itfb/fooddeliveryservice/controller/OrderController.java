@@ -10,6 +10,7 @@ import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
 import com.itfb.fooddeliveryservice.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -38,7 +39,8 @@ public class OrderController {
         return orderMapper.domainToDto(orderService.getOrderById(orderId).get());
     }
 
-    @PostMapping("/{customerId}/orders/")
+    @PostMapping("/{customerId}/orders")
+    @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody OrderDTO createOrder(@PathVariable Long customerId
             , @RequestBody Order order) {
         Customer customer = customerService.getCustomerById(customerId).get();

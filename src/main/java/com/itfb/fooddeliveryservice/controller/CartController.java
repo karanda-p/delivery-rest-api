@@ -10,6 +10,7 @@ import com.itfb.fooddeliveryservice.service.CartItemService;
 import com.itfb.fooddeliveryservice.service.CartService;
 import com.itfb.fooddeliveryservice.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -24,7 +25,6 @@ public class CartController {
     private final CartService cartService;
     private final CustomerService customerService;
 
-
     @GetMapping("/{customersId}/cart/items")
     public Collection<CartItemDTO> getAllCartItemsByCustomerId(@PathVariable Long customersId) {
         return cartItemMapper.domainsToDtos(customerService
@@ -35,6 +35,7 @@ public class CartController {
     }
 
     @PostMapping("/{customersId}/cart/items")
+    @ResponseStatus(HttpStatus.CREATED)
     public CartItemDTO addProductToCart(@RequestBody Product product, @PathVariable Long customersId) {
         Customer customer = customerService.getCustomerById(customersId).get();
         if (customer.getCart() == null) {
@@ -58,13 +59,14 @@ public class CartController {
     }
 
     @DeleteMapping("/{customersId}/cart")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCartByLogin(@PathVariable Long customersId) {
         customerService.getCustomerById(customersId).get().setCart(null);
         cartService.deleteCartById(customerService.getCustomerById(customersId).get().getCartId());
     }
 
-
     @DeleteMapping("/{customersId}/cart/items")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCartItemFromCart(@PathVariable Long customersId, @RequestBody CartItem cartItem) {
         Customer customer = customerService.getCustomerById(customersId).get();
         customer.getCart().getCartItems().remove(cartItem);
