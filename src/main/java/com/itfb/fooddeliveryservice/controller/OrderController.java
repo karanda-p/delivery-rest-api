@@ -50,7 +50,7 @@ public class OrderController {
         for (OrderItem orderItem : order.getOrderItems()) {
 //            orderItem.setOrder(order);
 //            orderItemService.saveOrderItem(orderItem);
-            amount += orderItem.getProduct().getPrice();
+            amount += orderItem.getProduct().getPrice() * orderItem.getQuantity();
         }
         order.setAmount(amount);
         order.setRestaurant(order.getOrderItems()
@@ -64,9 +64,11 @@ public class OrderController {
         for (OrderItem orderItem: order.getOrderItems()){
             orderItem.setOrder(order);
         }
+        customer.getCart().setCartItems(null);
         cartItemService.deleteAllCartItemsByCartId(customer.getCartId());
-        cartService.deleteCartById(customer.getCartId());
         customer.setCart(null);
+        cartService.deleteCartById(customer.getCartId());
+
         customerService.saveOrUpdateCustomer(customer);
         return orderMapper.domainToDto(savedOrder);
     }
