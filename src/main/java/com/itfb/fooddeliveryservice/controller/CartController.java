@@ -43,6 +43,14 @@ public class CartController {
             customerService.saveOrUpdateCustomer(customer);
         }
         CartItem cartItem = new CartItem(product, 1);
+        for (CartItem item : customer.getCart().getCartItems()) {
+            if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
+                item.setQuantity(item.getQuantity() + 1);
+                CartItem savedItem = cartItemService.saveOrUpdateCartItem(item);
+                return cartItemMapper.domainToDto(savedItem);
+            }
+        }
+
         customer.getCart().addCartItemToCart(cartItem);
         cartItem.setCart(customer.getCart());
         CartItem savedCartItem = cartItemService.saveOrUpdateCartItem(cartItem);
@@ -57,7 +65,7 @@ public class CartController {
 
 
     @DeleteMapping("/{customersId}/cart/items")
-    public void deleteCartItemFromCart(@PathVariable Long customersId, @RequestBody CartItem cartItem){
+    public void deleteCartItemFromCart(@PathVariable Long customersId, @RequestBody CartItem cartItem) {
         Customer customer = customerService.getCustomerById(customersId).get();
         customer.getCart().getCartItems().remove(cartItem);
         customerService.saveOrUpdateCustomer(customer);

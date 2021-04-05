@@ -13,7 +13,7 @@ public interface CartItemToOrderItemMapper {
 
     @Mappings({
             @Mapping(source = "productId", target = "productId"),
-            @Mapping(source = "id", target = "id")
+            @Mapping(target = "id", ignore = true)
     })
     OrderItem cartItemToOrderItem(CartItem cartItem);
 

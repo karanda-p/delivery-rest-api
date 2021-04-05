@@ -64,6 +64,7 @@ public class OrderController {
         for (OrderItem orderItem: order.getOrderItems()){
             orderItem.setOrder(order);
         }
+        cartItemService.deleteAllCartItemsByCartId(customer.getCartId());
         cartService.deleteCartById(customer.getCartId());
         customer.setCart(null);
         customerService.saveOrUpdateCustomer(customer);

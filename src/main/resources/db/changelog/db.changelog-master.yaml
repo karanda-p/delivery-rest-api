@@ -444,6 +444,7 @@ databaseChangeLog:
         - renameTable:
             newTableName: orders
             oldTableName: order
+
   - changeSet:
       id: add_unique_charachteristic_to_columns
       author: p.karanda
