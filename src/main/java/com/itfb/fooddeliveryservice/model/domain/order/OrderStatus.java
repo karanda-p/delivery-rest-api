@@ -2,7 +2,7 @@ package com.itfb.fooddeliveryservice.model.domain.order;
 
 public enum OrderStatus {
 
-    READY("Выполнен"),
+    DONE("Выполнен"),
     CANCELED("Отменен"),
     IN_PROGRESS("Выполняется");
 

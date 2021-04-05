@@ -41,7 +41,8 @@ public class OrderController {
 
     @PostMapping("/{customerId}/orders")
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody OrderDTO createOrder(@PathVariable Long customerId
+    public @ResponseBody
+    OrderDTO createOrder(@PathVariable Long customerId
             , @RequestBody Order order) {
         Customer customer = customerService.getCustomerById(customerId).get();
         order.setCustomer(customer);
@@ -50,8 +51,6 @@ public class OrderController {
         }
         double amount = 0D;
         for (OrderItem orderItem : order.getOrderItems()) {
-//            orderItem.setOrder(order);
-//            orderItemService.saveOrderItem(orderItem);
             amount += orderItem.getProduct().getPrice() * orderItem.getQuantity();
         }
         order.setAmount(amount);
@@ -59,19 +58,26 @@ public class OrderController {
                 .get(0)
                 .getProduct()
                 .getRestaurant());
-
         order.setStatus(OrderStatus.IN_PROGRESS);
         order.setCreationDate(LocalDate.now().toString());
         Order savedOrder = orderService.saveOrder(order);
-        for (OrderItem orderItem: order.getOrderItems()){
+        for (OrderItem orderItem : order.getOrderItems()) {
             orderItem.setOrder(order);
         }
         customer.getCart().setCartItems(null);
         cartItemService.deleteAllCartItemsByCartId(customer.getCartId());
         customer.setCart(null);
         cartService.deleteCartById(customer.getCartId());
-
         customerService.saveOrUpdateCustomer(customer);
+        return orderMapper.domainToDto(savedOrder);
+    }
+    
+    //Change order status
+    @PutMapping("/{customerId}/orders")
+    public OrderDTO doneOrderByRestaurant(@RequestBody Order order){
+        Order newOrder = orderService.getOrderById(order.getId()).get();
+        newOrder.setStatus(order.getStatus());
+        Order savedOrder = orderService.saveOrder(newOrder);
         return orderMapper.domainToDto(savedOrder);
     }
 }
