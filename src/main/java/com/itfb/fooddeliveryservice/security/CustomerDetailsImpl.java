@@ -1,34 +1,47 @@
 package com.itfb.fooddeliveryservice.security;
 
+import com.itfb.fooddeliveryservice.model.domain.Customer;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 @ToString
-public class UserDetailsImpl implements UserDetails {
+public class CustomerDetailsImpl implements UserDetails {
 
     private Long id;
-    private String username;
+    private String login;
     private String password;
     private boolean enabled;
-    private Collection<GrantedAuthority> authorities;
+    private final Collection<GrantedAuthority> authorities = new HashSet<>();
     private String phone;
 
-    public UserDetailsImpl(Long id, String username, String password, boolean enabled) {
+    public CustomerDetailsImpl(Long id, String username, String password, boolean enabled) {
         this.id = id;
-        this.username = username;
+        this.login = username;
         this.password = password;
         this.enabled = enabled;
+        this.authorities.add(new SimpleGrantedAuthority("USER"));
     }
 
-    public UserDetailsImpl(Long id, String username, String password, boolean enabled, Collection<GrantedAuthority> authorities, String phone) {
+
+    public CustomerDetailsImpl(Customer customer) {
+        this.id = customer.getId();
+        this.login = customer.getLogin();
+        this.password = customer.getPassword();
+        this.enabled = customer.isEnabled();
+        this.authorities.add(new SimpleGrantedAuthority("USER"));
+    }
+
+    public CustomerDetailsImpl(Long id, String username, String password, boolean enabled, Collection<GrantedAuthority> authorities, String phone) {
         this.id = id;
-        this.username = username;
+        this.login = username;
         this.password = password;
         this.enabled = enabled;
-        this.authorities = authorities;
+        this.authorities.add(new SimpleGrantedAuthority("USER"));
         this.phone = phone;
     }
 
@@ -44,22 +57,22 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return login;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

@@ -467,3 +467,11 @@ databaseChangeLog:
             column:
               name: authority
               type: varchar(50)
+
+  - changeSet:
+      id: create_tables_for_spring_session
+      author: p.karanda
+      changes:
+        - sqlFile:
+            path: script.sql
+

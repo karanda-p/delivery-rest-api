@@ -3,8 +3,10 @@ package com.itfb.fooddeliveryservice.model.domain;
 import com.itfb.fooddeliveryservice.model.domain.cart.Cart;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "customer")
@@ -32,6 +34,12 @@ public class Customer {
 
     @Column(name = "cart_id", insertable = false, updatable = false)
     private Long cartId;
+
+    @Column(name = "enabled")
+    private boolean enabled;
+
+//    @Column(name = "authorities")
+//    private Collection<GrantedAuthority> authorities;
 
     public Customer() {
     }
