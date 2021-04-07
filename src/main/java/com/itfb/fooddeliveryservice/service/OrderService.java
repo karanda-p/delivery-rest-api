@@ -36,8 +36,8 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Order createNewOrder(Long customerId, Order order){
-        Customer customer = customerService.getCustomerById(customerId).get();
+    public Order createNewOrder(String login, Order order){
+        Customer customer = customerService.getCustomerByLogin(login).get();
         order.setCustomer(customer);
         for (CartItem cartItem : customer.getCart().getCartItems()) {
             order.addOrderItemToOrder(cartItemToOrderItemMapper.cartItemToOrderItem(cartItem));
@@ -57,8 +57,7 @@ public class OrderService {
         for (OrderItem orderItem : order.getOrderItems()) {
             orderItem.setOrder(order);
         }
-        customer.getCart().setCartItems(null);
-        cartItemService.deleteAllCartItemsByCartId(customer.getCartId());
+
         customer.setCart(null);
         cartService.deleteCartById(customer.getCartId());
         customerService.saveOrUpdateCustomer(customer);
