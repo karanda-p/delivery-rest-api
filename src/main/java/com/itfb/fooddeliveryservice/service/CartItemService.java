@@ -29,8 +29,8 @@ public class CartItemService {
         cartItemRepository.deleteAllByCartId(cartId);
     }
 
-    public void deleteCartItemFromCart(Long customerId, CartItem cartItem){
-        Customer customer = customerService.getCustomerById(customerId).get();
+    public void deleteCartItemFromCart(String customerLogin, CartItem cartItem){
+        Customer customer = customerService.getCustomerByLogin(customerLogin).get();
         customer.getCart().getCartItems().remove(cartItem);
         customerService.saveOrUpdateCustomer(customer);
     }

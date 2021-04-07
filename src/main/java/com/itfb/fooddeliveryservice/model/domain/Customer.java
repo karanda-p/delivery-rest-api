@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -33,6 +35,17 @@ public class Customer {
     @Column(name = "cart_id", insertable = false, updatable = false)
     private Long cartId;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "customer_role",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
     public Customer() {
     }
 
@@ -40,5 +53,9 @@ public class Customer {
         this.login = login;
         this.password = password;
         this.phone = phone;
+    }
+
+    public void addRole(Role role){
+        this.roles.add(role);
     }
 }

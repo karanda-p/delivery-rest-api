@@ -467,3 +467,90 @@ databaseChangeLog:
             column:
               name: authority
               type: varchar(50)
+
+  - changeSet:
+      id: create_tables_for_spring_session
+      author: p.karanda
+      changes:
+        - sqlFile:
+            path: script.sql
+
+  - changeSet:
+      id: remove_authorities_column_from_customer
+      author: p.karanda
+      changes:
+        - dropColumn:
+            tableName: customer
+            columnName: authority
+
+  - changeSet:
+      id: create_table_role
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(50)
+
+  - changeSet:
+      id: create_table_customers_roles
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: customer_role
+            columns:
+              - column:
+                  name: customer_id
+                  type: BIGINT
+              - column:
+                  name: role_id
+                  type: BIGINT
+        - addForeingKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: customer_role
+            constraintName: fk_customer_role_customer_id
+            referencedTableName: customer
+            referencedColumnNames: id
+        - addForeingKeyConstraint:
+            baseColumnNames: role_id
+            baseTableName: customer_role
+            constraintName: fk_customer_role_role_id
+            referencedTableName: role
+            referencedColumnNames: id
+
+  - changeSet:
+      id: add_role_user
+      author: p.karanda
+      changes:
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: name
+                  value: ROLE_USER
+              - column:
+                  name: id
+                  value: 1
+
+  - changeSet:
+      id: add_role_admin
+      author: p.karanda
+      changes:
+        - insert:
+            tableName: role
+            columns:
+              - column:
+                  name: name
+                  value: ROLE_ADMIN
+              - column:
+                  name: id
+                  value: 2
+

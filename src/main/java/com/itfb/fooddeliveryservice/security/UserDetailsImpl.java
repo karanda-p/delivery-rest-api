@@ -1,36 +1,31 @@
 package com.itfb.fooddeliveryservice.security;
 
-import lombok.ToString;
+import com.itfb.fooddeliveryservice.model.domain.Customer;
+import com.itfb.fooddeliveryservice.model.domain.Role;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
-@ToString
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
     private Long id;
-    private String username;
+    private String login;
     private String password;
     private boolean enabled;
     private Collection<GrantedAuthority> authorities;
-    private String phone;
-
-    public UserDetailsImpl(Long id, String username, String password, boolean enabled) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
-
-    public UserDetailsImpl(Long id, String username, String password, boolean enabled, Collection<GrantedAuthority> authorities, String phone) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.authorities = authorities;
-        this.phone = phone;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -39,40 +34,31 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return this.login;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return this.enabled;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
 }
