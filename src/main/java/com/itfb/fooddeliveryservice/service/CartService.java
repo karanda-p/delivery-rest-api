@@ -22,15 +22,15 @@ public class CartService {
         return cartRepository.findById(id);
     }
 
-    public void deleteCartById(Long id){
+    public void deleteCartById(Long id) {
         cartRepository.deleteById(id);
     }
 
-    public Cart saveOrUpdateCart(Cart cart){
+    public Cart saveOrUpdateCart(Cart cart) {
         return cartRepository.save(cart);
     }
 
-    public CartItem addProductToCart(Product product, String customerLogin){
+    public CartItem addProductToCart(Product product, String customerLogin) {
         Customer customer = customerService.getCustomerByLogin(customerLogin).get();
         if (customer.getCart() == null) {
             Cart cart = new Cart();

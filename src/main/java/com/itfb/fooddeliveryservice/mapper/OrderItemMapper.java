@@ -5,5 +5,5 @@ import com.itfb.fooddeliveryservice.model.dto.OrderItemDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface OrderItemMapper extends BaseMapper<OrderItem, OrderItemDTO>{
+public interface OrderItemMapper extends BaseMapper<OrderItem, OrderItemDTO> {
 }

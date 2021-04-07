@@ -2,8 +2,6 @@ package com.itfb.fooddeliveryservice.controller;
 
 import com.itfb.fooddeliveryservice.mapper.ProductMapper;
 import com.itfb.fooddeliveryservice.mapper.RestaurantMapper;
-import com.itfb.fooddeliveryservice.model.domain.Product;
-import com.itfb.fooddeliveryservice.model.domain.Restaurant;
 import com.itfb.fooddeliveryservice.model.dto.ProductDTO;
 import com.itfb.fooddeliveryservice.model.dto.RestaurantDTO;
 import com.itfb.fooddeliveryservice.service.ProductService;

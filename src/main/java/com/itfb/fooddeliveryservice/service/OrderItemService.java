@@ -11,7 +11,7 @@ public class OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
 
-    public OrderItem saveOrderItem(OrderItem orderItem){
+    public OrderItem saveOrderItem(OrderItem orderItem) {
         return orderItemRepository.save(orderItem);
     }
 }

@@ -55,7 +55,7 @@ public class Customer {
         this.phone = phone;
     }
 
-    public void addRole(Role role){
+    public void addRole(Role role) {
         this.roles.add(role);
     }
 }

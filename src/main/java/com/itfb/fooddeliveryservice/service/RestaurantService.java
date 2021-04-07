@@ -14,11 +14,11 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
-    public Collection<Restaurant> getAll(){
+    public Collection<Restaurant> getAll() {
         return restaurantRepository.findAll();
     }
 
-    public Optional<Restaurant> getById(Long id){
+    public Optional<Restaurant> getById(Long id) {
         return restaurantRepository.findById(id);
     }
 }

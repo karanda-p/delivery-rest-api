@@ -1,9 +1,7 @@
 package com.itfb.fooddeliveryservice.controller;
 
 import com.itfb.fooddeliveryservice.mapper.CartItemMapper;
-import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.Product;
-import com.itfb.fooddeliveryservice.model.domain.cart.Cart;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.dto.CartItemDTO;
 import com.itfb.fooddeliveryservice.security.UserDetailsImpl;

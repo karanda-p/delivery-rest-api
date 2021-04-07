@@ -15,11 +15,11 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Collection<Product> getAllProductsByRestaurant(Long restaurantId){
+    public Collection<Product> getAllProductsByRestaurant(Long restaurantId) {
         return productRepository.findAllByRestaurantId(restaurantId);
     }
 
-    public Optional<Product> getProductById(Long id){
+    public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 

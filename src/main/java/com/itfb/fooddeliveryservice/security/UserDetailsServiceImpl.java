@@ -3,7 +3,6 @@ package com.itfb.fooddeliveryservice.security;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<Customer> customer = customerRepository.findCustomerByLogin(s);
-        if(customer.isPresent()){
+        if (customer.isPresent()) {
             return UserDetailsImpl.builder()
                     .login(customer.get().getLogin())
                     .password(customer.get().getPassword())

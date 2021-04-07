@@ -24,19 +24,19 @@ public class OrderService {
     private final CartItemService cartItemService;
     private final CartItemToOrderItemMapper cartItemToOrderItemMapper;
 
-    public Optional<Order> getOrderById(Long id){
+    public Optional<Order> getOrderById(Long id) {
         return orderRepository.findById(id);
     }
 
-    public Collection<Order> getAllOrdersByCustomerId(Long customerId){
+    public Collection<Order> getAllOrdersByCustomerId(Long customerId) {
         return orderRepository.getAllByCustomerId(customerId);
     }
 
-    public Order saveOrder(Order order){
+    public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }
 
-    public Order createNewOrder(String login, Order order){
+    public Order createNewOrder(String login, Order order) {
         Customer customer = customerService.getCustomerByLogin(login).get();
         order.setCustomer(customer);
         for (CartItem cartItem : customer.getCart().getCartItems()) {
@@ -64,7 +64,7 @@ public class OrderService {
         return savedOrder;
     }
 
-    public Order changeOrderStatus(Order order){
+    public Order changeOrderStatus(Order order) {
         Order newOrder = orderRepository.getOne(order.getId());
         newOrder.setStatus(order.getStatus());
         Order savedOrder = orderRepository.save(newOrder);

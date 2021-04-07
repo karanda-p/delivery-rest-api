@@ -1,12 +1,7 @@
 package com.itfb.fooddeliveryservice.controller;
 
-import com.itfb.fooddeliveryservice.mapper.CartItemToOrderItemMapper;
 import com.itfb.fooddeliveryservice.mapper.OrderMapper;
-import com.itfb.fooddeliveryservice.model.domain.Customer;
-import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
-import com.itfb.fooddeliveryservice.model.domain.order.OrderItem;
-import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
 import com.itfb.fooddeliveryservice.security.UserDetailsImpl;
 import com.itfb.fooddeliveryservice.service.*;
@@ -15,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Collection;
 
 @RestController
@@ -25,11 +19,6 @@ public class OrderController {
 
     private final OrderMapper orderMapper;
     private final OrderService orderService;
-    private final CustomerService customerService;
-    private final CartItemService cartItemService;
-    private final CartService cartService;
-    private final CartItemToOrderItemMapper cartItemToOrderItemMapper;
-    private final OrderItemService orderItemService;
 
     @GetMapping("/orders")
     public Collection<OrderDTO> getAllOrdersByCustomerId(@AuthenticationPrincipal UserDetailsImpl userDetails) {

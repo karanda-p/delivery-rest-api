@@ -15,18 +15,18 @@ public class CustomerService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CustomerRepository customerRepository;
 
-    public Customer saveOrUpdateCustomer(Customer customer){
+    public Customer saveOrUpdateCustomer(Customer customer) {
         Customer newCustomer = customer;
         newCustomer.setEnabled(true);
         newCustomer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
         return customerRepository.save(customer);
     }
 
-    public Optional<Customer> getCustomerByLogin(String login){
+    public Optional<Customer> getCustomerByLogin(String login) {
         return customerRepository.findCustomerByLogin(login);
     }
 
-    public Optional<Customer> getCustomerById(Long id){
+    public Optional<Customer> getCustomerById(Long id) {
         return customerRepository.findById(id);
     }
 }

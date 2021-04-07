@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface ProductMapper extends BaseMapper<Product, ProductDTO>{
+public interface ProductMapper extends BaseMapper<Product, ProductDTO> {
 
     @Override
     @Mapping(source = "domain.restaurantId", target = "restaurantId")

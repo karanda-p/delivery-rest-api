@@ -13,7 +13,7 @@ public class RoleService {
 
     private final RoleRepository roleRepository;
 
-    public Optional<Role> getByName(String name){
+    public Optional<Role> getByName(String name) {
         return roleRepository.findByName(name);
     }
 }
