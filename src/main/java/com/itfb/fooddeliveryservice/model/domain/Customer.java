@@ -3,10 +3,10 @@ package com.itfb.fooddeliveryservice.model.domain;
 import com.itfb.fooddeliveryservice.model.domain.cart.Cart;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -38,8 +38,13 @@ public class Customer {
     @Column(name = "enabled")
     private boolean enabled;
 
-//    @Column(name = "authorities")
-//    private Collection<GrantedAuthority> authorities;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "customer_role",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public Customer() {
     }
@@ -48,5 +53,9 @@ public class Customer {
         this.login = login;
         this.password = password;
         this.phone = phone;
+    }
+
+    public void addRole(Role role){
+        this.roles.add(role);
     }
 }
