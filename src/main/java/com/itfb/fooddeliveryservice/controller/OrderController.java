@@ -45,7 +45,7 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
     OrderDTO createOrder(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody Order order) {
-        return orderMapper.domainToDto(orderService.createNewOrder(userDetails.getId(), order));
+        return orderMapper.domainToDto(orderService.createNewOrder(userDetails.getUsername(), order));
     }
 
     //Change order status

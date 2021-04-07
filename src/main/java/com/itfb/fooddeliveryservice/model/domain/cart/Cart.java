@@ -23,7 +23,7 @@ public class Cart {
     private Long id;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItems;
+    private List<CartItem> cartItems = new ArrayList<>();
 
     @Column(name = "creation_date")
     private String creationDate;
@@ -33,9 +33,6 @@ public class Cart {
     }
 
     public void addCartItemToCart(CartItem cartItem) {
-        if (cartItems == null) {
-            cartItems = new ArrayList<>();
-        }
         cartItems.add(cartItem);
     }
 }
