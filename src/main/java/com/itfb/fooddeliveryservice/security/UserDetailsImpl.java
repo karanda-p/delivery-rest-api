@@ -2,6 +2,10 @@ package com.itfb.fooddeliveryservice.security;
 
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.Role;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,33 +15,31 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    private Customer customer;
-
-    public UserDetailsImpl(Customer customer) {
-        this.customer = customer;
-    }
+    private Long id;
+    private String login;
+    private String password;
+    private boolean enabled;
+    private Collection<GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roles = customer.getRoles();
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        for (Role role: roles){
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return customer.getPassword();
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return customer.getLogin();
+        return this.login;
     }
 
     @Override
@@ -57,6 +59,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return customer.isEnabled();
+        return this.enabled;
     }
 }

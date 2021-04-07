@@ -30,8 +30,8 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public CartItem addProductToCart(Product product, Long customerId){
-        Customer customer = customerService.getCustomerById(customerId).get();
+    public CartItem addProductToCart(Product product, String customerLogin){
+        Customer customer = customerService.getCustomerByLogin(customerLogin).get();
         if (customer.getCart() == null) {
             Cart cart = new Cart();
             customer.setCart(cart);

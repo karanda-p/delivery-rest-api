@@ -3,6 +3,7 @@ package com.itfb.fooddeliveryservice.service;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,9 +12,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomerService {
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final CustomerRepository customerRepository;
 
     public Customer saveOrUpdateCustomer(Customer customer){
+        Customer newCustomer = customer;
+        newCustomer.setEnabled(true);
+        newCustomer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
         return customerRepository.save(customer);
     }
 

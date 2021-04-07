@@ -9,6 +9,6 @@ spring:
       ddl-auto: none
     show-sql: true
 
-#  session:
-#    store-type: jdbc
+  session:
+    store-type: jdbc
 

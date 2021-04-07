@@ -6,11 +6,13 @@ import com.itfb.fooddeliveryservice.model.domain.Product;
 import com.itfb.fooddeliveryservice.model.domain.cart.Cart;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.dto.CartItemDTO;
+import com.itfb.fooddeliveryservice.security.UserDetailsImpl;
 import com.itfb.fooddeliveryservice.service.CartItemService;
 import com.itfb.fooddeliveryservice.service.CartService;
 import com.itfb.fooddeliveryservice.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -25,31 +27,34 @@ public class CartController {
     private final CustomerService customerService;
     private final CartItemService cartItemService;
 
-    @GetMapping("/{customersId}/cart/items")
-    public Collection<CartItemDTO> getAllCartItemsByCustomerId(@PathVariable Long customersId) {
+    @GetMapping("/cart/items")
+    public Collection<CartItemDTO> getAllCartItemsByCustomerId(
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cartItemMapper.domainsToDtos(customerService
-                .getCustomerById(customersId)
+                .getCustomerByLogin(userDetails.getLogin())
                 .get()
                 .getCart()
                 .getCartItems());
     }
 
-    @PostMapping("/{customerId}/cart/items")
+    @PostMapping("/cart/items")
     @ResponseStatus(HttpStatus.CREATED)
-    public CartItemDTO addProductToCart(@RequestBody Product product, @PathVariable Long customerId) {
-        return cartItemMapper.domainToDto(cartService.addProductToCart(product, customerId));
+    public CartItemDTO addProductToCart(@RequestBody Product product
+            , @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return cartItemMapper.domainToDto(cartService.addProductToCart(product, userDetails.getLogin()));
     }
 
-    @DeleteMapping("/{customerId}/cart")
+    @DeleteMapping("/cart")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCartByLogin(@PathVariable Long customerId) {
-        customerService.getCustomerById(customerId).get().setCart(null);
-        cartService.deleteCartById(customerService.getCustomerById(customerId).get().getCartId());
+    public void deleteCartByLogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        customerService.getCustomerByLogin(userDetails.getLogin()).get().setCart(null);
+        cartService.deleteCartById(customerService.getCustomerByLogin(userDetails.getLogin()).get().getCartId());
     }
 
-    @DeleteMapping("/{customerId}/cart/items")
+    @DeleteMapping("/cart/items")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCartItemFromCart(@PathVariable Long customerId, @RequestBody CartItem cartItem) {
-        cartItemService.deleteCartItemFromCart(customerId, cartItem);
+    public void deleteCartItemFromCart(@AuthenticationPrincipal UserDetailsImpl userDetails
+            , @RequestBody CartItem cartItem) {
+        cartItemService.deleteCartItemFromCart(userDetails.getLogin(), cartItem);
     }
 }

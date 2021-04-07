@@ -8,9 +8,11 @@ import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderItem;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
+import com.itfb.fooddeliveryservice.security.UserDetailsImpl;
 import com.itfb.fooddeliveryservice.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,26 +31,26 @@ public class OrderController {
     private final CartItemToOrderItemMapper cartItemToOrderItemMapper;
     private final OrderItemService orderItemService;
 
-    @GetMapping("/{customerId}/orders")
-    public Collection<OrderDTO> getAllOrdersByCustomerId(@PathVariable Long customerId) {
-        return orderMapper.domainsToDtos(orderService.getAllOrdersByCustomerId(customerId));
+    @GetMapping("/orders")
+    public Collection<OrderDTO> getAllOrdersByCustomerId(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return orderMapper.domainsToDtos(orderService.getAllOrdersByCustomerId(userDetails.getId()));
     }
 
-    @GetMapping("/{customerId}/orders/{orderId}")
+    @GetMapping("/orders/{orderId}")
     public OrderDTO getOrderById(@PathVariable Long orderId) {
         return orderMapper.domainToDto(orderService.getOrderById(orderId).get());
     }
 
-    @PostMapping("/{customerId}/orders")
+    @PostMapping("/orders")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody
-    OrderDTO createOrder(@PathVariable Long customerId, @RequestBody Order order) {
-        return orderMapper.domainToDto(orderService.createNewOrder(customerId,order));
+    OrderDTO createOrder(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody Order order) {
+        return orderMapper.domainToDto(orderService.createNewOrder(userDetails.getId(), order));
     }
 
     //Change order status
-    @PutMapping("/{customerId}/orders")
-    public OrderDTO changeOrderStatus(@RequestBody Order order){
+    @PutMapping("/orders")
+    public OrderDTO changeOrderStatus(@RequestBody Order order) {
         return orderMapper.domainToDto(orderService.changeOrderStatus(order));
     }
 }
