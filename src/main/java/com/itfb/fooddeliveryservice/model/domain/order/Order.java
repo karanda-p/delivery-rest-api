@@ -4,6 +4,7 @@ import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.Restaurant;
 import lombok.Getter;
 import lombok.Setter;
+import com.itfb.fooddeliveryservice.model.domain.Customer;
 
 import javax.persistence.*;
 import java.util.ArrayList;

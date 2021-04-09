@@ -3,6 +3,7 @@ package com.itfb.fooddeliveryservice.repository;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.itfb.fooddeliveryservice.model.domain.Customer;
 
 import java.util.Optional;
 

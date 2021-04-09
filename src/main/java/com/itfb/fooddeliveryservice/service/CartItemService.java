@@ -6,6 +6,7 @@ import com.itfb.fooddeliveryservice.repository.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.itfb.fooddeliveryservice.model.domain.Customer;
 
 import java.util.Collection;
 

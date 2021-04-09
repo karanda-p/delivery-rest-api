@@ -9,6 +9,7 @@ import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.itfb.fooddeliveryservice.model.domain.Customer;
 
 import java.time.LocalDate;
 import java.util.Collection;
