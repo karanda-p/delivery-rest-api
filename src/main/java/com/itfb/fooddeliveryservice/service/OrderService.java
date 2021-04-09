@@ -10,8 +10,11 @@ import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -22,30 +25,31 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CustomerService customerService;
     private final CartService cartService;
-    private final CartItemService cartItemService;
     private final CartItemToOrderItemMapper cartItemToOrderItemMapper;
 
-    public Optional<Order> getOrderById(Long id) {
-        return orderRepository.findById(id);
+    @Transactional
+    public Order getOrderById(Long id) {
+        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Заказ не найден"));
     }
 
+    @Transactional
     public Collection<Order> getAllOrdersByCustomerId(Long customerId) {
         return orderRepository.getAllByCustomerId(customerId);
     }
 
+    @Transactional
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }
 
+    @Transactional
     public Order createNewOrder(String login, Order order) {
         Customer customer = customerService.getCustomerByLogin(login).get();
         order.setCustomer(customer);
+        double amount = 0D;
         for (CartItem cartItem : customer.getCart().getCartItems()) {
             order.addOrderItemToOrder(cartItemToOrderItemMapper.cartItemToOrderItem(cartItem));
-        }
-        double amount = 0D;
-        for (OrderItem orderItem : order.getOrderItems()) {
-            amount += orderItem.getProduct().getPrice() * orderItem.getQuantity();
+            amount += cartItem.getProduct().getPrice() * cartItem.getQuantity();
         }
         order.setAmount(amount);
         order.setRestaurant(order.getOrderItems()
@@ -53,18 +57,15 @@ public class OrderService {
                 .getProduct()
                 .getRestaurant());
         order.setStatus(OrderStatus.IN_PROGRESS);
-        order.setCreationDate(LocalDate.now().toString());
+        order.setCreationDate(LocalDateTime.now());
         Order savedOrder = orderRepository.save(order);
-        for (OrderItem orderItem : order.getOrderItems()) {
-            orderItem.setOrder(order);
-        }
-
         customer.setCart(null);
         cartService.deleteCartById(customer.getCartId());
         customerService.saveOrUpdateCustomer(customer);
         return savedOrder;
     }
 
+    @Transactional
     public Order changeOrderStatus(Order order) {
         Order newOrder = orderRepository.getOne(order.getId());
         newOrder.setStatus(order.getStatus());

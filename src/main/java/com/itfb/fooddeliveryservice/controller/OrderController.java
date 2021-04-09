@@ -27,7 +27,7 @@ public class OrderController {
 
     @GetMapping("/orders/{orderId}")
     public OrderDTO getOrderById(@PathVariable Long orderId) {
-        return orderMapper.domainToDto(orderService.getOrderById(orderId).get());
+        return orderMapper.domainToDto(orderService.getOrderById(orderId));
     }
 
     @PostMapping("/orders")

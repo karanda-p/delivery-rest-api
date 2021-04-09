@@ -7,6 +7,7 @@ import lombok.Setter;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,21 +43,21 @@ public class Order {
     private OrderStatus status;
 
     @Column(name = "creation_date")
-    private String creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "done_date")
-    private String doneDate;
+    private LocalDateTime doneDate;
 
     @Column(name = "amount")
     private double amount;
 
-    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public Order() {
     }
 
-    public Order(Long customerId, Long restaurantId, String address, OrderStatus status, String creationDate, String doneDate, double amount) {
+    public Order(Long customerId, Long restaurantId, String address, OrderStatus status, LocalDateTime creationDate, LocalDateTime doneDate, double amount) {
         this.customerId = customerId;
         this.restaurantId = restaurantId;
         this.address = address;
@@ -68,5 +69,6 @@ public class Order {
 
     public void addOrderItemToOrder(OrderItem orderItem) {
         orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 }

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -25,13 +26,14 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
     @Column(name = "creation_date")
-    private String creationDate;
+    private LocalDateTime creationDate;
 
     public Cart() {
-        this.creationDate = LocalDate.now().toString();
+        this.creationDate = LocalDateTime.now();
     }
 
     public void addCartItemToCart(CartItem cartItem) {
         cartItems.add(cartItem);
+        cartItem.setCart(this);
     }
 }

@@ -8,6 +8,7 @@ import com.itfb.fooddeliveryservice.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,7 +18,6 @@ public class CartService {
 
     private final CartRepository cartRepository;
     private final CustomerService customerService;
-    private final CartItemService cartItemService;
 
     public Optional<Cart> findCartById(Long id) {
         return cartRepository.findById(id);
@@ -31,6 +31,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
+    @Transactional
     public CartItem addProductToCart(Product product, String customerLogin) {
         Customer customer = customerService.getCustomerByLogin(customerLogin).get();
         if (customer.getCart() == null) {
@@ -42,11 +43,20 @@ public class CartService {
         for (CartItem item : customer.getCart().getCartItems()) {
             if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
                 item.setQuantity(item.getQuantity() + 1);
-                return cartItemService.saveOrUpdateCartItem(item);
+//                return cartItemService.saveOrUpdateCartItem(item);
+                return item;
             }
         }
         customer.getCart().addCartItemToCart(cartItem);
         cartItem.setCart(customer.getCart());
-        return cartItemService.saveOrUpdateCartItem(cartItem);
+//        return cartItemService.saveOrUpdateCartItem(cartItem);
+        return cartItem;
+    }
+
+    @Transactional
+    public void deleteCartItemFromCart(String customerLogin, CartItem cartItem) {
+        Customer customer = customerService.getCustomerByLogin(customerLogin).get();
+        customer.getCart().getCartItems().remove(cartItem);
+        customerService.saveOrUpdateCustomer(customer);
     }
 }

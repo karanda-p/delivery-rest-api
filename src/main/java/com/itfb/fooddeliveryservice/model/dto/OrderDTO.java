@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
@@ -12,7 +14,7 @@ public class OrderDTO {
     private Long restaurantId;
     private String address;
     private OrderStatus status;
-    private String creationDate;
+    private LocalDateTime creationDate;
     private String doneDate;
     private double amount;
 }

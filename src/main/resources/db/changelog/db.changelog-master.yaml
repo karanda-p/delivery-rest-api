@@ -554,3 +554,38 @@ databaseChangeLog:
                   name: id
                   value: 2
 
+  - changeSet:
+      id: change_password_column_data_type
+      author: p.karanda
+      changes:
+        - modifyDataType:
+            tableName: customer
+            columnName: password
+            newDataType: varchar(130)
+
+  - changeSet:
+      id: change_creation_date_data_type
+      author: p.karanda
+      changes:
+        - modifyDataType:
+            tableName: cart
+            columnName: creation_date
+            newDataType: datetime
+
+  - changeSet:
+      id: change_orders_creation_date_data_type
+      author: p.karanda
+      changes:
+        - modifyDataType:
+            tableName: orders
+            columnName: creation_date
+            newDataType: datetime
+
+  - changeSet:
+      id: change_orders_done_date_data_type
+      author: p.karanda
+      changes:
+        - modifyDataType:
+            tableName: orders
+            columnName: done_date
+            newDataType: datetime

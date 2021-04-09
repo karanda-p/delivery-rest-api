@@ -5,7 +5,6 @@ import com.itfb.fooddeliveryservice.model.domain.Product;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.dto.CartItemDTO;
 import com.itfb.fooddeliveryservice.security.UserDetailsImpl;
-import com.itfb.fooddeliveryservice.service.CartItemService;
 import com.itfb.fooddeliveryservice.service.CartService;
 import com.itfb.fooddeliveryservice.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ public class CartController {
     private final CartItemMapper cartItemMapper;
     private final CartService cartService;
     private final CustomerService customerService;
-    private final CartItemService cartItemService;
 
     @GetMapping("/cart/items")
     public Collection<CartItemDTO> getAllCartItemsByCustomerId(
@@ -53,6 +51,6 @@ public class CartController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCartItemFromCart(@AuthenticationPrincipal UserDetailsImpl userDetails
             , @RequestBody CartItem cartItem) {
-        cartItemService.deleteCartItemFromCart(userDetails.getLogin(), cartItem);
+        cartService.deleteCartItemFromCart(userDetails.getLogin(), cartItem);
     }
 }
