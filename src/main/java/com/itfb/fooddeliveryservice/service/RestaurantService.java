@@ -23,6 +23,6 @@ public class RestaurantService {
 
     public Restaurant getById(Long id) {
         return restaurantRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(Message.ENTITY_NOT_FOUND, id));
+                () -> new EntityNotFoundException(Message.RESTAURANT_NOT_FOUND, id));
     }
 }

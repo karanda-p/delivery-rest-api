@@ -33,7 +33,7 @@ public class CartService {
 
     @Transactional
     public CartItem addProductToCart(Product product, String customerLogin) {
-        Customer customer = customerService.getCustomerByLogin(customerLogin).get();
+        Customer customer = customerService.getCustomerByLogin(customerLogin);
         if (customer.getCart() == null) {
             Cart cart = new Cart();
             customer.setCart(cart);
@@ -55,7 +55,7 @@ public class CartService {
 
     @Transactional
     public void deleteCartItemFromCart(String customerLogin, CartItem cartItem) {
-        Customer customer = customerService.getCustomerByLogin(customerLogin).get();
+        Customer customer = customerService.getCustomerByLogin(customerLogin);
         customer.getCart().getCartItems().remove(cartItem);
         customerService.saveOrUpdateCustomer(customer);
     }

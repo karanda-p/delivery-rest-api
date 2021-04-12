@@ -26,7 +26,7 @@ public class ProductService {
     @Transactional
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(Message.ENTITY_NOT_FOUND, id));
+                () -> new EntityNotFoundException(Message.PRODUCT_NOT_FOUND, id));
     }
 
 }
