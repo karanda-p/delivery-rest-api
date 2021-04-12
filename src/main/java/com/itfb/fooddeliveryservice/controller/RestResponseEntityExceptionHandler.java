@@ -1,8 +1,10 @@
 package com.itfb.fooddeliveryservice.controller;
 
+import com.itfb.fooddeliveryservice.component.MessageComponent;
 import com.itfb.fooddeliveryservice.exception.*;
 import com.itfb.fooddeliveryservice.model.Error;
 import com.itfb.fooddeliveryservice.model.Message;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +14,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 @ResponseBody
+@RequiredArgsConstructor
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final MessageComponent messageComponent;
 
     @ExceptionHandler(value = {
             EntityNotFoundException.class,
@@ -34,10 +39,16 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         } else if (exception instanceof OperationNotAllowedException) {
             status = HttpStatus.METHOD_NOT_ALLOWED;
         }
-        return buildErrorResult(exception.getMsg(), status, exception, exception.getParams());
+        return buildErrorResult(status, exception.getMsg(), exception.getParams());
     }
 
-    private ResponseEntity<Object> buildErrorResult(Message message, HttpStatus httpStatus, BaseException ex, Object... params) {
-        return new ResponseEntity<>(new Error(message, ex.getMsg().getText(), params), httpStatus);
+    private ResponseEntity<Object> buildErrorResult(HttpStatus httpStatus, Message message, Object... params) {
+        String text;
+        if (params.length == 0){
+            text = messageComponent.getMessage(message.getText());
+        } else {
+            text = messageComponent.getMessageWithParams(message.getText(), params);
+        }
+        return new ResponseEntity<>(new Error(message.getCode(), text, params), httpStatus);
     }
 }

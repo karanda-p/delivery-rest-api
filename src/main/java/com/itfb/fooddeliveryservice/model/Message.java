@@ -2,15 +2,15 @@ package com.itfb.fooddeliveryservice.model;
 
 public enum Message {
 
-    SUCCESS(0,"Успешно"),
-    ENTITY_NOT_FOUND(-1, "Объект не найден"),
-    CART_IS_EMPTY(-2, "Корзина пуста"),
-    USER_NOT_FOUND(-3, "Пользователь не найден"),
-    RESTAURANT_NOT_FOUND(-4, "Ресторан не найден"),
-    PRODUCT_NOT_FOUND(-5, "Продукт не найден");
+    SUCCESS(0,"message.success"),
+    ENTITY_NOT_FOUND(-1, "error.entityNotFound"),
+    CART_IS_EMPTY(-2, "error.cartIsEmpty"),
+    USER_NOT_FOUND(-3, "error.userNotFound"),
+    RESTAURANT_NOT_FOUND(-4, "error.restaurantNotFound"),
+    PRODUCT_NOT_FOUND(-5, "error.productNotFound");
 
-    private int code;
-    private String text;
+    private final int code;
+    private final String text;
 
     Message(int code, String text) {
         this.code = code;

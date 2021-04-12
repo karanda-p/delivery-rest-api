@@ -1,7 +1,6 @@
 package com.itfb.fooddeliveryservice.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.itfb.fooddeliveryservice.exception.BaseException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,8 +9,8 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Error {
 
-    private Message message;
-    private String exception;
+    private int code;
+    private String text;
     private Object[] params;
 
 }

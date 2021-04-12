@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +19,7 @@ public class ProductService {
 
     @Transactional
     public Collection<Product> getAllProductsByRestaurant(Long restaurantId) {
+
         return productRepository.findAllByRestaurantId(restaurantId);
     }
 
