@@ -1,6 +1,8 @@
 package com.itfb.fooddeliveryservice.service;
 
+import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
 import com.itfb.fooddeliveryservice.mapper.CartItemToOrderItemMapper;
+import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -29,7 +30,7 @@ public class OrderService {
 
     @Transactional
     public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Заказ не найден"));
+        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Message.ENTITY_NOT_FOUND, id));
     }
 
     @Transactional
@@ -44,7 +45,9 @@ public class OrderService {
 
     @Transactional
     public Order createNewOrder(String login, Order order) {
-        Customer customer = customerService.getCustomerByLogin(login).get();
+        Customer customer = customerService.getCustomerByLogin(login).orElseThrow(() -> new EntityNotFoundException(Message.ENTITY_NOT_FOUND, login));
+        if (customer.getCart() == null)
+            throw new EntityNotFoundException(Message.CART_IS_EMPTY, login);
         order.setCustomer(customer);
         double amount = 0D;
         for (CartItem cartItem : customer.getCart().getCartItems()) {
@@ -69,7 +72,6 @@ public class OrderService {
     public Order changeOrderStatus(Order order) {
         Order newOrder = orderRepository.getOne(order.getId());
         newOrder.setStatus(order.getStatus());
-        Order savedOrder = orderRepository.save(newOrder);
-        return savedOrder;
+        return orderRepository.save(newOrder);
     }
 }

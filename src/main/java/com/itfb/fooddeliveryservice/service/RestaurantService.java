@@ -1,5 +1,7 @@
 package com.itfb.fooddeliveryservice.service;
 
+import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
+import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Restaurant;
 import com.itfb.fooddeliveryservice.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,8 @@ public class RestaurantService {
         return restaurantRepository.findAll();
     }
 
-    public Optional<Restaurant> getById(Long id) {
-        return restaurantRepository.findById(id);
+    public Restaurant getById(Long id) {
+        return restaurantRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(Message.ENTITY_NOT_FOUND, id));
     }
 }

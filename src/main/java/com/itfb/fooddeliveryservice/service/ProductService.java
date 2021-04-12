@@ -1,5 +1,7 @@
 package com.itfb.fooddeliveryservice.service;
 
+import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
+import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Product;
 import com.itfb.fooddeliveryservice.model.domain.Restaurant;
 import com.itfb.fooddeliveryservice.repository.ProductRepository;
@@ -22,8 +24,9 @@ public class ProductService {
     }
 
     @Transactional
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(Message.ENTITY_NOT_FOUND, id));
     }
 
 }

@@ -29,7 +29,7 @@ public class RestaurantController {
 
     @GetMapping("/{id}")
     public RestaurantDTO getRestaurantById(@PathVariable Long id) {
-        return restaurantMapper.domainToDto(restaurantService.getById(id).get());
+        return restaurantMapper.domainToDto(restaurantService.getById(id));
     }
 
     @GetMapping("/{id}/products")
@@ -39,7 +39,7 @@ public class RestaurantController {
 
     @GetMapping("/{id}/products/{productId}")
     public ProductDTO getProduct(@PathVariable Long productId) {
-        return productMapper.domainToDto(productService.getProductById(productId).get());
+        return productMapper.domainToDto(productService.getProductById(productId));
     }
 
 }

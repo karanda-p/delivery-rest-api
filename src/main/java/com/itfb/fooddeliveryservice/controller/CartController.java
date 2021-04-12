@@ -28,7 +28,6 @@ public class CartController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return cartItemMapper.domainsToDtos(customerService
                 .getCustomerByLogin(userDetails.getLogin())
-                .get()
                 .getCart()
                 .getCartItems());
     }
@@ -43,8 +42,8 @@ public class CartController {
     @DeleteMapping("/cart")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCartByLogin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        customerService.getCustomerByLogin(userDetails.getLogin()).get().setCart(null);
-        cartService.deleteCartById(customerService.getCustomerByLogin(userDetails.getLogin()).get().getCartId());
+        customerService.getCustomerByLogin(userDetails.getLogin()).setCart(null);
+        cartService.deleteCartById(customerService.getCustomerByLogin(userDetails.getLogin()).getCartId());
     }
 
     @DeleteMapping("/cart/items")

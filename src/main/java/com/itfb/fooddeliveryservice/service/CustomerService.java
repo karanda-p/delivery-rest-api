@@ -1,5 +1,7 @@
 package com.itfb.fooddeliveryservice.service;
 
+import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
+import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,16 +24,18 @@ public class CustomerService {
         Customer newCustomer = customer;
         newCustomer.setEnabled(true);
         newCustomer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
-        return customerRepository.save(customer);
+        return customerRepository.save(newCustomer);
     }
 
     @Transactional
-    public Optional<Customer> getCustomerByLogin(String login) {
-        return customerRepository.findCustomerByLogin(login);
+    public Customer getCustomerByLogin(String login) {
+        return customerRepository.findCustomerByLogin(login).orElseThrow(
+                () -> new EntityNotFoundException(Message.USER_NOT_FOUND, login));
     }
 
     @Transactional
-    public Optional<Customer> getCustomerById(Long id) {
-        return customerRepository.findById(id);
+    public Customer getCustomerById(Long id) {
+        return customerRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(Message.USER_NOT_FOUND, id));
     }
 }

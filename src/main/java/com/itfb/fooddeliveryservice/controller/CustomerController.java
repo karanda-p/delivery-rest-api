@@ -30,11 +30,7 @@ public class CustomerController {
     @GetMapping
     public CustomerDTO getCustomerByLogin(@AuthenticationPrincipal UserDetailsImpl userDetails
             , HttpServletResponse resp) {
-        if (customerService.getCustomerByLogin(userDetails.getLogin()).isPresent()) {
-            return customerMapper.domainToDto(customerService.getCustomerByLogin(userDetails.getLogin()).get());
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
-        }
+        return customerMapper.domainToDto(customerService.getCustomerByLogin(userDetails.getLogin()));
     }
 
     @PutMapping
