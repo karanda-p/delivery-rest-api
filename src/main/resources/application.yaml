@@ -10,6 +10,25 @@ spring:
     show-sql: true
   session:
     store-type: jdbc
+
+  ldap:
+    urls: ldap://192.168.30.10:3268
+    base: DC=itfbgroup,DC=local
+    username: portal_admin@itfbgroup.local
+    password: Q1w2e3r4
+    user-search-filter: (&(objectClass=user)(sAMAccountName={0}))
+    user-uid: sAMAccountName
+    referral: ignore
+    attrs:
+      - sAMAccountName
+      - mail
+      - displayName
+      - memberOf
+      - userAccountControl
 server:
   servlet:
     context-path: /food-delivery-service
+
+app:
+  user-details-auth:
+    test: false
