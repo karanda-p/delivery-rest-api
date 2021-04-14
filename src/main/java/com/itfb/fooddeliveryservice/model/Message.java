@@ -7,7 +7,8 @@ public enum Message {
     CART_IS_EMPTY(-2, "error.cartIsEmpty"),
     USER_NOT_FOUND(-3, "error.userNotFound"),
     RESTAURANT_NOT_FOUND(-4, "error.restaurantNotFound"),
-    PRODUCT_NOT_FOUND(-5, "error.productNotFound");
+    PRODUCT_NOT_FOUND(-5, "error.productNotFound"),
+    ORDER_NOT_FOUND(-6, "error.orderNotFound");
 
     private final int code;
     private final String text;

@@ -12,9 +12,9 @@ spring:
     store-type: jdbc
 
   ldap:
-    urls: ldap://192.168.30.10:3268
+    urls: ldap://192.168.30.10:3268/
     base: DC=itfbgroup,DC=local
-    username: portal_admin@itfbgroup.local
+    username: portal_user@itfbgroup.local
     password: Q1w2e3r4
     user-search-filter: (&(objectClass=user)(sAMAccountName={0}))
     user-uid: sAMAccountName
@@ -29,6 +29,9 @@ server:
   servlet:
     context-path: /food-delivery-service
 
-app:
-  user-details-auth:
-    test: false
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+

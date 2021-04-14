@@ -1,9 +1,9 @@
 package com.itfb.fooddeliveryservice.controller;
 
-import com.itfb.fooddeliveryservice.mapper.OrderMapper;
+import com.itfb.fooddeliveryservice.mapper.common.OrderMapper;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
-import com.itfb.fooddeliveryservice.security.UserDetailsImpl;
+import com.itfb.fooddeliveryservice.security.Impl.UserDetailsImpl;
 import com.itfb.fooddeliveryservice.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

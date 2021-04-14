@@ -12,6 +12,7 @@ public class LdapProperties {
     private String username;
     private String password;
     private String userSearchFilter;
+    private String userDnPattern;
     private String userUid;
     private String referral;
     private String[] attrs;

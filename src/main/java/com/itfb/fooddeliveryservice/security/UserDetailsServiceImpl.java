@@ -2,6 +2,7 @@ package com.itfb.fooddeliveryservice.security;
 
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.repository.CustomerRepository;
+import com.itfb.fooddeliveryservice.security.Impl.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

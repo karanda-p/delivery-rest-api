@@ -1,5 +1,6 @@
-package com.itfb.fooddeliveryservice.mapper;
+package com.itfb.fooddeliveryservice.mapper.common;
 
+import com.itfb.fooddeliveryservice.mapper.BaseMapper;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.dto.CartItemDTO;
 import org.mapstruct.Mapper;

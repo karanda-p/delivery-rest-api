@@ -1,4 +1,4 @@
-package com.itfb.fooddeliveryservice.security;
+package com.itfb.fooddeliveryservice.security.Impl;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

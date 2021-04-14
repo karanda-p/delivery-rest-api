@@ -1,19 +1,20 @@
 package com.itfb.fooddeliveryservice.controller;
 
-import com.itfb.fooddeliveryservice.mapper.ProductMapper;
-import com.itfb.fooddeliveryservice.mapper.RestaurantMapper;
+import com.itfb.fooddeliveryservice.mapper.common.ProductMapper;
+import com.itfb.fooddeliveryservice.mapper.common.RestaurantMapper;
 import com.itfb.fooddeliveryservice.model.dto.ProductDTO;
 import com.itfb.fooddeliveryservice.model.dto.RestaurantDTO;
 import com.itfb.fooddeliveryservice.service.ProductService;
 import com.itfb.fooddeliveryservice.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping(value = "/restaurants", produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class RestaurantController {
 

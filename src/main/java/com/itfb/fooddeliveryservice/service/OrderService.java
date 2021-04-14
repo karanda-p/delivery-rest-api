@@ -6,18 +6,14 @@ import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
-import com.itfb.fooddeliveryservice.model.domain.order.OrderItem;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.itfb.fooddeliveryservice.model.domain.Customer;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +26,7 @@ public class OrderService {
 
     @Transactional
     public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Message.ENTITY_NOT_FOUND, id));
+        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Message.ORDER_NOT_FOUND, id));
     }
 
     @Transactional
