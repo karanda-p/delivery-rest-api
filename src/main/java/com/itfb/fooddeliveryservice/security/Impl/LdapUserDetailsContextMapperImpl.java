@@ -34,8 +34,13 @@ public class LdapUserDetailsContextMapperImpl implements UserDetailsContextMappe
             throw new RuntimeException(e.getMessage());
         }
 
-        customer = customerRepository.findCustomerByLogin(username).orElseThrow(
-                ()-> new EntityNotFoundException(Message.USER_NOT_FOUND, username));
+        if (customerRepository.findCustomerByLogin(username).isPresent()){
+            customer = customerRepository.findCustomerByLogin(username).get();
+        } else {
+            customer.setEnabled(true);
+            customer.setPassword("");
+            customer = customerRepository.save(customer);
+        }
 
         return userDetailsMapper.domainToImpl(customer);
     }

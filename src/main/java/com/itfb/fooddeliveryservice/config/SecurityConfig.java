@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.ldap.core.ContextSource;
-import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,15 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
-import org.springframework.security.ldap.authentication.BindAuthenticator;
-import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
-import org.springframework.security.ldap.authentication.LdapAuthenticator;
-import org.springframework.security.ldap.search.FilterBasedLdapUserSearch;
-import org.springframework.security.ldap.server.UnboundIdContainer;
 import org.springframework.security.ldap.userdetails.UserDetailsContextMapper;
 
-import java.util.Arrays;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -60,12 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .contextSource(ldapContextSource)
                 .userSearchFilter(ldapProperties.getUserSearchFilter())
                 .userDetailsContextMapper(ldapUserDetailsContextMapper);
-//                .userSearchFilter("(sAMAccountName={0})")
-//                .userSearchBase("CN=Users")
-//                .contextSource()
-//                .url("ldap://192.168.30.10:3268/DC=itfbgroup,DC=local")
-//                .managerDn("cn=portal_user,cn=Users,dc=itfbgroup,dc=local")
-//                .managerPassword("Q1w2e3r4");
     }
 
     @Override
