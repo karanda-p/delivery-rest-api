@@ -20,11 +20,15 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     @Transactional
-    public Customer saveOrUpdateCustomer(Customer customer) {
+    public Customer saveCustomer(Customer customer) {
         Customer newCustomer = customer;
         newCustomer.setEnabled(true);
         newCustomer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
         return customerRepository.save(newCustomer);
+    }
+
+    public Customer updateCustomer(Customer customer) {
+        return customerRepository.save(customer);
     }
 
     @Transactional

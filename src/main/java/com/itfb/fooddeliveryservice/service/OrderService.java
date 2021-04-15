@@ -60,7 +60,7 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
         customer.setCart(null);
         cartService.deleteCartById(customer.getCartId());
-        customerService.saveOrUpdateCustomer(customer);
+        customerService.updateCustomer(customer);
         return savedOrder;
     }
 

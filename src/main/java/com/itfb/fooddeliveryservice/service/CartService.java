@@ -37,7 +37,7 @@ public class CartService {
         if (customer.getCart() == null) {
             Cart cart = new Cart();
             customer.setCart(cart);
-            customerService.saveOrUpdateCustomer(customer);
+            customerService.updateCustomer(customer);
         }
         CartItem cartItem = new CartItem(product, 1);
         for (CartItem item : customer.getCart().getCartItems()) {
@@ -57,6 +57,6 @@ public class CartService {
     public void deleteCartItemFromCart(String customerLogin, CartItem cartItem) {
         Customer customer = customerService.getCustomerByLogin(customerLogin);
         customer.getCart().getCartItems().remove(cartItem);
-        customerService.saveOrUpdateCustomer(customer);
+        customerService.updateCustomer(customer);
     }
 }
