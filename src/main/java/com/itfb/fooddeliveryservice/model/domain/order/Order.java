@@ -2,6 +2,7 @@ package com.itfb.fooddeliveryservice.model.domain.order;
 
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.Restaurant;
+import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
 import lombok.Getter;
 import lombok.Setter;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
@@ -50,6 +51,13 @@ public class Order {
 
     @Column(name = "amount")
     private double amount;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "payment_details_id", insertable = false, updatable = false)
+    private PaymentDetails paymentDetails;
+
+    @Column(name = "payment_details_id")
+    private Long paymentId;
 
     @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();

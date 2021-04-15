@@ -55,7 +55,7 @@ public class OrderService {
                 .get(0)
                 .getProduct()
                 .getRestaurant());
-        order.setStatus(OrderStatus.IN_PROGRESS);
+        order.setStatus(OrderStatus.CREATED);
         order.setCreationDate(LocalDateTime.now());
         Order savedOrder = orderRepository.save(order);
         customer.setCart(null);

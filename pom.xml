@@ -20,6 +20,10 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <snakeyaml.version>1.28</snakeyaml.version>
         <spring.session.version>2.4.2</spring.session.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <openfeign.version>3.0.2</openfeign.version>
+        <feign-okhttp.version>11.1</feign-okhttp.version>
+        <feign-httpclient.version>11.1</feign-httpclient.version>
     </properties>
 
     <dependencies>
@@ -95,9 +99,24 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${openfeign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-okhttp</artifactId>
+            <version>${feign-okhttp.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+            <version>${feign-httpclient.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.30</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
     </dependencies>

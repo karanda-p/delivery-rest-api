@@ -589,3 +589,39 @@ databaseChangeLog:
             tableName: orders
             columnName: done_date
             newDataType: datetime
+
+  - changeSet:
+      id: add_payment_details_table
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: payment_details
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: done_date
+                  type: datetime
+              - column:
+                  name: amount
+                  type: numeric
+              - column:
+                  name: status
+                  type: varchar(15)
+        - addColumn:
+            tableName: orders
+            column:
+              name: payment_details_id
+              type: BIGINT
+        - createSequence:
+            sequenceName: payment_details_seq
+        - addForeignKeyConstraint:
+            baseColumnNames: payment_details_id
+            baseTableName: orders
+            constraintName: fk_orders_payment_details_id
+            referencedTableName: payment_details
+            referencedColumnNames: id
