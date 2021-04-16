@@ -41,3 +41,4 @@ app:
       url: http://localhost:8081/payment-service
     courier:
       url: http://localhost:8082/courier-service
+

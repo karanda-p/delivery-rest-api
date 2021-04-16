@@ -1,5 +1,6 @@
 package com.itfb.fooddeliveryservice.service.integration;
 
+import com.itfb.fooddeliveryservice.model.domain.task.Task;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,5 +9,5 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface CourierIntegrationService {
 
     @PostMapping("/task")
-    public void sendOrderToCourierService(OrderDTO order);
+    public Task sendOrderToCourierService(OrderDTO order);
 }

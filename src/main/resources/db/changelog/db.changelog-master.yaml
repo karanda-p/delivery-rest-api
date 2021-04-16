@@ -676,3 +676,15 @@ databaseChangeLog:
             oldColumnName: adress
             newColumnName: address
             tableName: task
+  - changeSet:
+      id: change_type_of_status
+      author: p.karanda
+      changes:
+        - modifyDataType:
+            tableName: orders
+            columnName: status
+            newDataType: integer
+        - modifyDataType:
+            tableName: task
+            columnName: status
+            newDataType: integer

@@ -8,6 +8,7 @@ import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
+import com.itfb.fooddeliveryservice.model.domain.task.Task;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import com.itfb.fooddeliveryservice.service.integration.CourierIntegrationService;
 import lombok.RequiredArgsConstructor;
@@ -76,11 +77,18 @@ public class OrderService {
         return orderRepository.save(newOrder);
     }
 
-//    @Scheduled
-    public void sendOrderToCourierService(){
-        Order order = orderRepository.findFirstByStatus(OrderStatus.PAID).orElseThrow(
-                () -> new EntityNotFoundException(Message.NO_ORDERS_TO_DELIVER));
+    @Transactional
+    @Scheduled(fixedDelay = 15000)
+    public void sendOrderToCourierService() {
+        if (orderRepository.findFirstByStatus(OrderStatus.PAID).isPresent()) {
+            Order order = orderRepository.findFirstByStatus(OrderStatus.PAID).get();
+            courierIntegrationService.sendOrderToCourierService(orderMapper.domainToDto(order));
+            order.setStatus(OrderStatus.IN_PROGRESS);
+            orderRepository.save(order);
+        } else {
+            System.out.println("Ожидание новых заказов");
+        }
 
-        courierIntegrationService.sendOrderToCourierService(orderMapper.domainToDto(order));
     }
+
 }
