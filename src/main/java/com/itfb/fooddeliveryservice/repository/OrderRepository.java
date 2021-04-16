@@ -15,5 +15,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Collection<Order> getAllByCustomerId(Long customerId);
 
-    Optional<Order> findFirstByStatus(OrderStatus status);
+    Collection<Order> getAllByStatus(OrderStatus status);
 }
