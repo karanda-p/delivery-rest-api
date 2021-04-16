@@ -2,13 +2,16 @@ package com.itfb.fooddeliveryservice.service;
 
 import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
 import com.itfb.fooddeliveryservice.mapper.CartItemToOrderItemMapper;
+import com.itfb.fooddeliveryservice.mapper.common.OrderMapper;
 import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
+import com.itfb.fooddeliveryservice.service.integration.CourierIntegrationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,8 @@ public class OrderService {
     private final CustomerService customerService;
     private final CartService cartService;
     private final CartItemToOrderItemMapper cartItemToOrderItemMapper;
+    private final CourierIntegrationService courierIntegrationService;
+    private final OrderMapper orderMapper;
 
     @Transactional
     public Order getOrderById(Long id) {
@@ -69,5 +74,13 @@ public class OrderService {
         Order newOrder = orderRepository.getOne(order.getId());
         newOrder.setStatus(order.getStatus());
         return orderRepository.save(newOrder);
+    }
+
+//    @Scheduled
+    public void sendOrderToCourierService(){
+        Order order = orderRepository.findFirstByStatus(OrderStatus.PAID).orElseThrow(
+                () -> new EntityNotFoundException(Message.NO_ORDERS_TO_DELIVER));
+
+        courierIntegrationService.sendOrderToCourierService(orderMapper.domainToDto(order));
     }
 }

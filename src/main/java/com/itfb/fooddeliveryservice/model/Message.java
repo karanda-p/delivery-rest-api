@@ -8,7 +8,9 @@ public enum Message {
     USER_NOT_FOUND(-3, "error.userNotFound"),
     RESTAURANT_NOT_FOUND(-4, "error.restaurantNotFound"),
     PRODUCT_NOT_FOUND(-5, "error.productNotFound"),
-    ORDER_NOT_FOUND(-6, "error.orderNotFound");
+    ORDER_NOT_FOUND(-6, "error.orderNotFound"),
+    ORDER_ALREADY_PAID(-7, "error.orderAlreadyPaid"),
+    NO_ORDERS_TO_DELIVER(-8, "message.noOrdersToDeliver");
 
     private final int code;
     private final String text;

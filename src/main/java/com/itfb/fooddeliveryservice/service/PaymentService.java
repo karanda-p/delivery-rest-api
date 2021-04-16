@@ -1,10 +1,13 @@
 package com.itfb.fooddeliveryservice.service;
 
+import com.itfb.fooddeliveryservice.exception.OperationNotAllowedException;
 import com.itfb.fooddeliveryservice.mapper.common.OrderMapper;
+import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
 import com.itfb.fooddeliveryservice.repository.PaymentDetailsRepository;
+import com.itfb.fooddeliveryservice.service.integration.PaymentIntegrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +25,18 @@ public class PaymentService {
 
     @Transactional
     public Order commitPayment(Order sentOrder){
+
         Order order = orderService.getOrderById(sentOrder.getId());
-        PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
-        paymentDetails.setDoneDate(LocalDateTime.now());
-        paymentDetailsRepository.save(paymentDetails);
-        order.setPaymentDetails(paymentDetails);
-        order.setPaymentId(paymentDetails.getId());
-        order.setStatus(OrderStatus.PAID);
-
-        return orderService.saveOrder(order);
+        if (order.getStatus() == OrderStatus.CREATED){
+            PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
+            paymentDetails.setDoneDate(LocalDateTime.now());
+            paymentDetailsRepository.save(paymentDetails);
+            order.setPaymentDetails(paymentDetails);
+            order.setPaymentId(paymentDetails.getId());
+            order.setStatus(OrderStatus.PAID);
+            return orderService.saveOrder(order);
+        } else {
+            throw new OperationNotAllowedException(Message.ORDER_ALREADY_PAID, order.getId());
+        }
     }
-
 }

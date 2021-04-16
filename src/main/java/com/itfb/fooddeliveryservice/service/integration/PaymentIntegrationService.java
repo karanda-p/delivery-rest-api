@@ -1,4 +1,4 @@
-package com.itfb.fooddeliveryservice.service;
+package com.itfb.fooddeliveryservice.service.integration;
 
 import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;

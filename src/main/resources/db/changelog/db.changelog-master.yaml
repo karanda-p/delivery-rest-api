@@ -625,3 +625,54 @@ databaseChangeLog:
             constraintName: fk_orders_payment_details_id
             referencedTableName: payment_details
             referencedColumnNames: id
+
+  - changeSet:
+      id: create_table_task
+      author: p.karanda
+      changes:
+        - createTable:
+            tableName: task
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: BIGINT
+              - column:
+                  name: info
+                  type: varchar(150)
+              - column:
+                  name: status
+                  type: varchar(15)
+        - createSequence:
+            sequenceName: task_seq
+
+  - changeSet:
+      id: add_adress_column_to_task_table
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: task
+            column:
+              name: adress
+              type: varchar(64)
+
+  - changeSet:
+      id: create_task_sequence
+      author: p.karanda
+      changes:
+        - createSequence:
+            sequenceName: task_seq
+
+  - changeSet:
+      id: rename_address_column
+      author: p.karanda
+      changes:
+        - renameColumn:
+            oldColumnName: adress
+            newColumnName: address
+            tableName: task
