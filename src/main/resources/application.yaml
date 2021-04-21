@@ -28,6 +28,7 @@ spring:
 server:
   servlet:
     context-path: /food-delivery-service
+  port: 8080
 
 logging:
   level:
@@ -41,4 +42,6 @@ app:
       url: http://localhost:8081/payment-service
     courier:
       url: http://localhost:8082/courier-service
+    notification:
+      url: http://localhost:8083/notification-service
 

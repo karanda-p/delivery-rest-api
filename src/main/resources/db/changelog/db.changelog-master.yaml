@@ -688,3 +688,23 @@ databaseChangeLog:
             tableName: task
             columnName: status
             newDataType: integer
+
+  - changeSet:
+      id: add_notification_columns_to_customer
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: customer
+            column:
+              name: email
+              type: varchar(150)
+        - addColumn:
+            tableName: customer
+            column:
+              name: enable_email_notification
+              type: boolean
+        - addColumn:
+            tableName: customer
+            column:
+              name: enable_phone_notification
+              type: boolean

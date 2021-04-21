@@ -38,6 +38,15 @@ public class Customer {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "enable_email_notification")
+    private boolean emailNotification;
+
+    @Column(name = "enable_phone_notification")
+    private boolean phoneNotification;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "customer_role",

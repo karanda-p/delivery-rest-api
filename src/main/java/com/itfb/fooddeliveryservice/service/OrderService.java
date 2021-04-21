@@ -2,17 +2,19 @@ package com.itfb.fooddeliveryservice.service;
 
 import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
 import com.itfb.fooddeliveryservice.mapper.CartItemToOrderItemMapper;
+import com.itfb.fooddeliveryservice.mapper.common.CustomerMapper;
 import com.itfb.fooddeliveryservice.mapper.common.OrderMapper;
 import com.itfb.fooddeliveryservice.model.Message;
+import com.itfb.fooddeliveryservice.model.NotificationMessage;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
-import com.itfb.fooddeliveryservice.model.domain.task.Task;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import com.itfb.fooddeliveryservice.repository.PaymentDetailsRepository;
 import com.itfb.fooddeliveryservice.service.integration.CourierIntegrationService;
+import com.itfb.fooddeliveryservice.service.integration.NotificationIntegrationService;
 import com.itfb.fooddeliveryservice.service.integration.PaymentIntegrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -36,6 +38,9 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final PaymentIntegrationService paymentIntegrationService;
     private final PaymentDetailsRepository paymentDetailsRepository;
+    private final CustomerMapper customerMapper;
+    private final NotificationIntegrationService notificationIntegrationService;
+
 
     @Transactional
     public Order getOrderById(Long id) {
@@ -70,15 +75,22 @@ public class OrderService {
                 .getRestaurant());
         order.setStatus(OrderStatus.CREATED);
         order.setCreationDate(LocalDateTime.now());
+        order = orderRepository.save(order);
         customer.setCart(null);
         cartService.deleteCartById(customer.getCartId());
-        customerService.updateCustomer(customer);
+        customer = customerService.updateCustomer(customer);
+
+        notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
+
         PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
         paymentDetails.setDoneDate(LocalDateTime.now());
         paymentDetailsRepository.save(paymentDetails);
         order.setPaymentDetails(paymentDetails);
         order.setPaymentId(paymentDetails.getId());
         order.setStatus(OrderStatus.PAID);
+
+        notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
+
         return orderRepository.save(order);
     }
 
@@ -93,13 +105,15 @@ public class OrderService {
     @Scheduled(fixedDelay = 15000)
     public void sendOrderToCourierService() {
 
-        List<Order> orders =  new ArrayList<>(orderRepository.getAllByStatus(OrderStatus.PAID));
+        List<Order> orders = new ArrayList<>(orderRepository.getAllByStatus(OrderStatus.PAID));
 
-        if (!orders.isEmpty()){
-            for (Order order: orders){
+        if (!orders.isEmpty()) {
+            for (Order order : orders) {
                 courierIntegrationService.sendOrderToCourierService(orderMapper.domainToDto(order));
                 order.setStatus(OrderStatus.IN_PROGRESS);
+                Customer customer = customerService.getCustomerById(order.getCustomerId());
                 orderRepository.save(order);
+                notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
             }
         } else {
             System.out.println("Ожидание новых заказов");

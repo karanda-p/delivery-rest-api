@@ -7,7 +7,6 @@ import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.itfb.fooddeliveryservice.model.domain.Customer;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -43,13 +42,11 @@ public class CartService {
         for (CartItem item : customer.getCart().getCartItems()) {
             if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
                 item.setQuantity(item.getQuantity() + 1);
-//                return cartItemService.saveOrUpdateCartItem(item);
                 return item;
             }
         }
         customer.getCart().addCartItemToCart(cartItem);
         cartItem.setCart(customer.getCart());
-//        return cartItemService.saveOrUpdateCartItem(cartItem);
         return cartItem;
     }
 
