@@ -5,7 +5,6 @@ import com.itfb.fooddeliveryservice.model.domain.Restaurant;
 import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
 import lombok.Getter;
 import lombok.Setter;
-import com.itfb.fooddeliveryservice.model.domain.Customer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

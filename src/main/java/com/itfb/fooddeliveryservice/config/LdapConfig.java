@@ -14,7 +14,7 @@ public class LdapConfig {
     private final LdapProperties ldapProperties;
 
     @Bean
-    public LdapContextSource ldapContextSource(){
+    public LdapContextSource ldapContextSource() {
         LdapContextSource contextSource = new LdapContextSource();
 
         contextSource.setBase(ldapProperties.getBase());

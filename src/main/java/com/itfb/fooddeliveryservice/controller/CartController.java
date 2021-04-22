@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/",consumes = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/", consumes = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class CartController {
 

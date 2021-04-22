@@ -1,6 +1,5 @@
 package com.itfb.fooddeliveryservice.model.domain.payment;
 
-import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import lombok.Data;
 
 import javax.persistence.*;

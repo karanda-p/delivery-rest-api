@@ -2,7 +2,7 @@ package com.itfb.fooddeliveryservice.model;
 
 public enum Message {
 
-    SUCCESS(0,"message.success"),
+    SUCCESS(0, "message.success"),
     ENTITY_NOT_FOUND(-1, "error.entityNotFound"),
     CART_IS_EMPTY(-2, "error.cartIsEmpty"),
     USER_NOT_FOUND(-3, "error.userNotFound"),
@@ -28,7 +28,7 @@ public enum Message {
         return text;
     }
 
-    public static Message valueOf(int code){
+    public static Message valueOf(int code) {
         for (Message message : Message.values())
             if (message.getCode() == code)
                 return message;

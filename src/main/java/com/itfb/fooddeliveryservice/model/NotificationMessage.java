@@ -21,7 +21,7 @@ public class NotificationMessage {
     private Long orderId;
     private OrderStatus orderStatus;
 
-    public NotificationMessage(Customer customer, Order order){
+    public NotificationMessage(Customer customer, Order order) {
         this.customerName = customer.getLogin();
         this.email = customer.getEmail();
         this.phone = customer.getPhone();

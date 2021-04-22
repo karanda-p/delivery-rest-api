@@ -44,7 +44,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     private ResponseEntity<Object> buildErrorResult(HttpStatus httpStatus, Message message, Object... params) {
         String text;
-        if (params.length == 0){
+        if (params.length == 0) {
             text = messageComponent.getMessage(message.getText());
         } else {
             text = messageComponent.getMessageWithParams(message.getText(), params);
