@@ -1,6 +1,6 @@
 package com.itfb.fooddeliveryservice.service.integration;
 
-import com.itfb.fooddeliveryservice.model.NotificationMessage;
+import com.itfb.fooddeliveryservice.model.notification.NotificationMessage;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 

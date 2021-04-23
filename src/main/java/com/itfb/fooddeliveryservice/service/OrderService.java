@@ -5,12 +5,12 @@ import com.itfb.fooddeliveryservice.mapper.CartItemToOrderItemMapper;
 import com.itfb.fooddeliveryservice.mapper.common.CustomerMapper;
 import com.itfb.fooddeliveryservice.mapper.common.OrderMapper;
 import com.itfb.fooddeliveryservice.model.Message;
-import com.itfb.fooddeliveryservice.model.NotificationMessage;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
+import com.itfb.fooddeliveryservice.model.notification.NotificationMessage;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import com.itfb.fooddeliveryservice.repository.PaymentDetailsRepository;
 import com.itfb.fooddeliveryservice.service.integration.CourierIntegrationService;
@@ -40,6 +40,7 @@ public class OrderService {
     private final PaymentDetailsRepository paymentDetailsRepository;
     private final CustomerMapper customerMapper;
     private final NotificationIntegrationService notificationIntegrationService;
+    private final NotificationService notificationService;
 
 
     @Transactional
@@ -80,7 +81,8 @@ public class OrderService {
         cartService.deleteCartById(customer.getCartId());
         customer = customerService.updateCustomer(customer);
 
-        notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
+        notificationIntegrationService.sendNotification(notificationService.configureNotificationMessage(customer
+                , order, NotificationMessage.CREATE));
 
         PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
         paymentDetails.setDoneDate(LocalDateTime.now());
@@ -89,7 +91,9 @@ public class OrderService {
         order.setPaymentId(paymentDetails.getId());
         order.setStatus(OrderStatus.PAID);
 
-        notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
+
+        notificationIntegrationService.sendNotification(notificationService.configureNotificationMessage(customer,
+                order, NotificationMessage.PAID));
 
         return orderRepository.save(order);
     }
@@ -113,7 +117,7 @@ public class OrderService {
                 order.setStatus(OrderStatus.IN_PROGRESS);
                 Customer customer = customerService.getCustomerById(order.getCustomerId());
                 orderRepository.save(order);
-                notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
+//                notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
             }
         } else {
             System.out.println("Ожидание новых заказов");
