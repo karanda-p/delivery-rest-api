@@ -19,10 +19,14 @@ public class NotificationMessage {
     public static final String DONE = "done";
 
     private String template;
-    private Map<String, Object> attributes;
+    private String email;
+    private boolean emailEnabled;
+    private String phone;
+    private boolean phoneEnabled;
+    private Map<String, String> attributes;
     private List<Attachment> attachments;
 
-    public void addAttributes(String name, Object value) {
+    public void addAttributes(String name, String value) {
         if (this.attributes == null) {
             attributes = new HashMap<>();
         }

@@ -14,13 +14,13 @@ public class NotificationService {
     public NotificationMessage configureNotificationMessage(Customer customer, Order order, String template) {
         NotificationMessage notificationMessage = new NotificationMessage();
         notificationMessage.setTemplate(template);
+        notificationMessage.setEmail(customer.getEmail());
+        notificationMessage.setPhone("");
+        notificationMessage.setEmailEnabled(customer.isEmailNotification());
+        notificationMessage.setPhoneEnabled(customer.isPhoneNotification());
         notificationMessage.addAttributes("name", customer.getLogin());
-        notificationMessage.addAttributes("email", customer.getEmail());
-        notificationMessage.addAttributes("phone", customer.getPhone());
-        notificationMessage.addAttributes("emailEnabled", customer.isEmailNotification());
-        notificationMessage.addAttributes("phoneEnabled", customer.isPhoneNotification());
-        notificationMessage.addAttributes("order", order.getId());
-        notificationMessage.addAttributes("amount", order.getAmount());
+        notificationMessage.addAttributes("orderId", String.valueOf(order.getId()));
+        notificationMessage.addAttributes("amount", String.valueOf(order.getAmount()));
         return notificationMessage;
     }
 

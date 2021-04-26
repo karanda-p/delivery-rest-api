@@ -10,6 +10,7 @@ import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
+import com.itfb.fooddeliveryservice.model.notification.Attachment;
 import com.itfb.fooddeliveryservice.model.notification.NotificationMessage;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import com.itfb.fooddeliveryservice.repository.PaymentDetailsRepository;
@@ -21,6 +22,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,6 +43,7 @@ public class OrderService {
     private final CustomerMapper customerMapper;
     private final NotificationIntegrationService notificationIntegrationService;
     private final NotificationService notificationService;
+    private final AttachmentService attachmentService;
 
 
     @Transactional
@@ -59,7 +62,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order createNewOrder(String login, Order order) {
+    public Order createNewOrder(String login, Order order) throws IOException {
         Customer customer = customerService.getCustomerByLogin(login);
         if (customer.getCart() == null)
             throw new EntityNotFoundException(Message.CART_IS_EMPTY, login);
@@ -86,14 +89,15 @@ public class OrderService {
 
         PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
         paymentDetails.setDoneDate(LocalDateTime.now());
-        paymentDetailsRepository.save(paymentDetails);
+        PaymentDetails savedPaymentDetails = paymentDetailsRepository.save(paymentDetails);
         order.setPaymentDetails(paymentDetails);
         order.setPaymentId(paymentDetails.getId());
         order.setStatus(OrderStatus.PAID);
 
-
+        Attachment attachment = attachmentService.createAttachment(savedPaymentDetails.toString()
+                , customer.getLogin() + order.getId()+".txt");
         notificationIntegrationService.sendNotification(notificationService.configureNotificationMessage(customer,
-                order, NotificationMessage.PAID));
+                order, NotificationMessage.PAID, attachment));
 
         return orderRepository.save(order);
     }
@@ -117,7 +121,8 @@ public class OrderService {
                 order.setStatus(OrderStatus.IN_PROGRESS);
                 Customer customer = customerService.getCustomerById(order.getCustomerId());
                 orderRepository.save(order);
-//                notificationIntegrationService.sendNotification(new NotificationMessage(customer, order));
+                notificationIntegrationService.sendNotification(notificationService.configureNotificationMessage(customer
+                        , order, NotificationMessage.DELIVERY));
             }
         } else {
             System.out.println("Ожидание новых заказов");
