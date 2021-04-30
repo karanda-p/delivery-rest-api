@@ -21,6 +21,8 @@ public class AttachmentService {
         attachment.setFileName(fileName);
         byte[] fileContent = FileUtils.readFileToByteArray(new File(fileName));
         attachment.setContent(Base64.getEncoder().encodeToString(fileContent));
+        File file = new File(fileName);
+        file.delete();
         return attachment;
     }
 }

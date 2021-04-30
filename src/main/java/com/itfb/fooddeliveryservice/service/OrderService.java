@@ -84,7 +84,7 @@ public class OrderService {
         cartService.deleteCartById(customer.getCartId());
         customer = customerService.updateCustomer(customer);
 
-        notificationIntegrationService.sendNotification(notificationService.configureNotificationMessage(customer
+        notificationService.sendNotification(notificationService.configureNotificationMessage(customer
                 , order, NotificationMessage.CREATE));
 
         PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
@@ -96,7 +96,7 @@ public class OrderService {
 
         Attachment attachment = attachmentService.createAttachment(savedPaymentDetails.toString()
                 , customer.getLogin() + order.getId()+".txt");
-        notificationIntegrationService.sendNotification(notificationService.configureNotificationMessage(customer,
+        notificationService.sendNotification(notificationService.configureNotificationMessage(customer,
                 order, NotificationMessage.PAID, attachment));
 
         return orderRepository.save(order);
@@ -121,7 +121,7 @@ public class OrderService {
                 order.setStatus(OrderStatus.IN_PROGRESS);
                 Customer customer = customerService.getCustomerById(order.getCustomerId());
                 orderRepository.save(order);
-                notificationIntegrationService.sendNotification(notificationService.configureNotificationMessage(customer
+                notificationService.sendNotification(notificationService.configureNotificationMessage(customer
                         , order, NotificationMessage.DELIVERY));
             }
         } else {
