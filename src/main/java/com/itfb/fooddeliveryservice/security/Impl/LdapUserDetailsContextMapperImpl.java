@@ -37,7 +37,6 @@ public class LdapUserDetailsContextMapperImpl implements UserDetailsContextMappe
             customer = customerRepository.findCustomerByLogin(username).get();
         } else {
             customer.setEnabled(true);
-//            customer.setPassword("");
             customer = customerRepository.save(customer);
         }
 
