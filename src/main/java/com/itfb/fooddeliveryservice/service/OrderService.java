@@ -40,8 +40,6 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final PaymentIntegrationService paymentIntegrationService;
     private final PaymentDetailsRepository paymentDetailsRepository;
-    private final CustomerMapper customerMapper;
-    private final NotificationIntegrationService notificationIntegrationService;
     private final NotificationService notificationService;
     private final AttachmentService attachmentService;
 
