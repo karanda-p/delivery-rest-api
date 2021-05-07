@@ -1,6 +1,6 @@
 package com.itfb.fooddeliveryservice.service;
 
-import com.itfb.fooddeliveryservice.model.domain.payment.PaymentDetails;
+import com.itfb.fooddeliveryservice.model.domain.task.Task;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class PaymentServiceListener {
+public class CourierServiceListener {
 
-    @RabbitListener(queues = "${message.payment-queue}")
-    public void payment(PaymentDetails paymentDetails){
+    @RabbitListener(queues = "${message.courier-queue}")
+    public void deliver(Task task){
 
     }
 }

@@ -53,4 +53,8 @@ app:
       url: http://localhost:8083/notification-service
 
 message:
-  routing-key: notification
+  courier-queue: courierQueue
+  courier-routing-key: message.courier
+  payment-queue: paymentQueue
+  payment-routing-key: message.payment
+  notification-routing-key: message.notification
