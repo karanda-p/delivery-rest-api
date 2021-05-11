@@ -53,8 +53,10 @@ app:
       url: http://localhost:8083/notification-service
 
 message:
-  courier-queue: courierQueue
+  courier-queue: fdsCourierQueue
   courier-routing-key: message.courier
-  payment-queue: paymentQueue
+  payment-queue: fdsPaymentQueue
   payment-routing-key: message.payment
   notification-routing-key: message.notification
+  fds-payment-routing-key: message.fds.payment
+  fds-courier-routing-key: message.fds.courier

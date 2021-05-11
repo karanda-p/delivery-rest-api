@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class NotificationService {
     private final RabbitTemplate template;
     private final Exchange exchange;
 
-    @Value("${message.routing-key}")
+    @Value("${message.notification-routing-key}")
     private String routingKey;
 
     public NotificationMessage configureNotificationMessage(Customer customer, Order order, String template) {

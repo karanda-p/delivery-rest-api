@@ -708,3 +708,13 @@ databaseChangeLog:
             column:
               name: enable_phone_notification
               type: boolean
+
+  - changeSet:
+      id: add_details_column_to_payment_details
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: payment_details
+            column:
+              name: details
+              type: BIGINT

@@ -17,17 +17,12 @@ public class CourierListenerConfig {
     @Value("${message.courier-queue}")
     private String queueName;
 
-    @Value("${message.courier-routing-key}")
+    @Value("${message.fds-courier-routing-key}")
     private String routingKey;
 
 
     @Bean
-    public TopicExchange receiverExchange() {
-        return new TopicExchange("eventExchange");
-    }
-
-    @Bean
-    public Queue eventReceivingQueue() {
+    public Queue eventCourierReceivingQueue() {
         if (queueName == null) {
             throw new IllegalStateException("No queue to listen to! Please specify the name of the queue to listen to with the property 'subscriber.queue'");
         }
@@ -35,12 +30,12 @@ public class CourierListenerConfig {
     }
 
     @Bean
-    public Binding binding(Queue eventReceivingQueue, TopicExchange receiverExchange) {
+    public Binding binding(Queue eventCourierReceivingQueue, TopicExchange receiverExchange) {
         if (routingKey == null) {
             throw new IllegalStateException("No events to listen to! Please specify the routing key for the events to listen to with the property 'subscriber.routingKey' (see EventPublisher for available routing keys).");
         }
         return BindingBuilder
-                .bind(eventReceivingQueue)
+                .bind(eventCourierReceivingQueue)
                 .to(receiverExchange)
                 .with(routingKey);
     }

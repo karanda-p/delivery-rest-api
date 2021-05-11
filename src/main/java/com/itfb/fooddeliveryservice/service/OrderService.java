@@ -2,7 +2,6 @@ package com.itfb.fooddeliveryservice.service;
 
 import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
 import com.itfb.fooddeliveryservice.mapper.CartItemToOrderItemMapper;
-import com.itfb.fooddeliveryservice.mapper.common.CustomerMapper;
 import com.itfb.fooddeliveryservice.mapper.common.OrderMapper;
 import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
@@ -15,9 +14,9 @@ import com.itfb.fooddeliveryservice.model.notification.NotificationMessage;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import com.itfb.fooddeliveryservice.repository.PaymentDetailsRepository;
 import com.itfb.fooddeliveryservice.service.integration.CourierIntegrationService;
-import com.itfb.fooddeliveryservice.service.integration.NotificationIntegrationService;
 import com.itfb.fooddeliveryservice.service.integration.PaymentIntegrationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +29,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -93,7 +93,7 @@ public class OrderService {
         order.setStatus(OrderStatus.PAID);
 
         Attachment attachment = attachmentService.createAttachment(savedPaymentDetails.toString()
-                , customer.getLogin() + order.getId()+".txt");
+                , customer.getLogin() + order.getId() + ".txt");
         notificationService.sendNotification(notificationService.configureNotificationMessage(customer,
                 order, NotificationMessage.PAID, attachment));
 
@@ -123,7 +123,7 @@ public class OrderService {
                         , order, NotificationMessage.DELIVERY));
             }
         } else {
-            System.out.println("Ожидание новых заказов");
+            log.info("Ожидание новых заказов!!!");
         }
     }
 

@@ -38,7 +38,6 @@ public class OrderController {
         return orderMapper.domainToDto(orderService.createNewOrder(userDetails.getUsername(), order));
     }
 
-    //Change order status
     @PutMapping("/orders")
     public OrderDTO changeOrderStatus(@RequestBody Order order) {
         return orderMapper.domainToDto(orderService.changeOrderStatus(order));

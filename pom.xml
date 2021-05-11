@@ -10,9 +10,9 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.itfb</groupId>
-    <artifactId>delivery-rest-api</artifactId>
+    <artifactId>food-delivery-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>delivery-rest-api</name>
+    <name>food-delivery-service</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>

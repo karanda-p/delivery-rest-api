@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
     @Bean
-    public Exchange eventExchange(){
+    public TopicExchange eventExchange(){
         return new TopicExchange("eventExchange");
     }
 

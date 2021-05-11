@@ -24,4 +24,7 @@ public class PaymentDetails {
     @Column(name = "status")
     private PaymentStatus paymentStatus;
 
+    @Column(name = "details")
+    private Long details;
+
 }
