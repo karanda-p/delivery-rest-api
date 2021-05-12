@@ -6,6 +6,8 @@ import com.itfb.fooddeliveryservice.model.dto.ProductDTO;
 import com.itfb.fooddeliveryservice.model.dto.RestaurantDTO;
 import com.itfb.fooddeliveryservice.service.ProductService;
 import com.itfb.fooddeliveryservice.service.RestaurantService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

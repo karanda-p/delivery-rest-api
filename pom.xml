@@ -24,6 +24,7 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <openfeign.version>3.0.2</openfeign.version>
         <feign-okhttp.version>11.1</feign-okhttp.version>
         <feign-httpclient.version>11.1</feign-httpclient.version>
+        <openapi-ui.version>1.5.7</openapi-ui.version>
     </properties>
 
     <dependencies>
@@ -131,7 +132,11 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${openapi-ui.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -33,6 +33,11 @@ spring:
       - memberOf
       - userAccountControl
 
+springdoc:
+  swagger-ui:
+    path: /api.html
+    operations-sorter: method
+
 server:
   servlet:
     context-path: /food-delivery-service
