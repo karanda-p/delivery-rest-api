@@ -32,6 +32,7 @@ spring:
       - displayName
       - memberOf
       - userAccountControl
+
 server:
   servlet:
     context-path: /food-delivery-service

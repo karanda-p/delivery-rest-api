@@ -13,8 +13,10 @@ import com.itfb.fooddeliveryservice.model.notification.Attachment;
 import com.itfb.fooddeliveryservice.model.notification.NotificationMessage;
 import com.itfb.fooddeliveryservice.repository.OrderRepository;
 import com.itfb.fooddeliveryservice.repository.PaymentDetailsRepository;
+import com.itfb.fooddeliveryservice.service.courier.CourierService;
 import com.itfb.fooddeliveryservice.service.integration.CourierIntegrationService;
 import com.itfb.fooddeliveryservice.service.integration.PaymentIntegrationService;
+import com.itfb.fooddeliveryservice.service.payment.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -37,8 +39,10 @@ public class OrderService {
     private final CartService cartService;
     private final CartItemToOrderItemMapper cartItemToOrderItemMapper;
     private final CourierIntegrationService courierIntegrationService;
+    private final CourierService courierService;
     private final OrderMapper orderMapper;
     private final PaymentIntegrationService paymentIntegrationService;
+    private final PaymentService paymentService;
     private final PaymentDetailsRepository paymentDetailsRepository;
     private final NotificationService notificationService;
     private final AttachmentService attachmentService;
@@ -85,17 +89,18 @@ public class OrderService {
         notificationService.sendNotification(notificationService.configureNotificationMessage(customer
                 , order, NotificationMessage.CREATE));
 
-        PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
-        paymentDetails.setDoneDate(LocalDateTime.now());
-        PaymentDetails savedPaymentDetails = paymentDetailsRepository.save(paymentDetails);
-        order.setPaymentDetails(paymentDetails);
-        order.setPaymentId(paymentDetails.getId());
-        order.setStatus(OrderStatus.PAID);
-
-        Attachment attachment = attachmentService.createAttachment(savedPaymentDetails.toString()
-                , customer.getLogin() + order.getId() + ".txt");
-        notificationService.sendNotification(notificationService.configureNotificationMessage(customer,
-                order, NotificationMessage.PAID, attachment));
+        paymentService.commitPayment(orderMapper.domainToDto(order));
+//        PaymentDetails paymentDetails = paymentIntegrationService.commitPayment(orderMapper.domainToDto(order));
+//        paymentDetails.setDoneDate(LocalDateTime.now());
+//        PaymentDetails savedPaymentDetails = paymentDetailsRepository.save(paymentDetails);
+//        order.setPaymentDetails(paymentDetails);
+//        order.setPaymentId(paymentDetails.getId());
+//        order.setStatus(OrderStatus.PAID);
+//
+//        Attachment attachment = attachmentService.createAttachment(savedPaymentDetails.toString()
+//                , customer.getLogin() + order.getId() + ".txt");
+//        notificationService.sendNotification(notificationService.configureNotificationMessage(customer,
+//                order, NotificationMessage.PAID, attachment));
 
         return orderRepository.save(order);
     }
@@ -108,6 +113,20 @@ public class OrderService {
     }
 
     @Transactional
+    public void changeOrderStatusToPaid(PaymentDetails paymentDetails) throws IOException {
+
+        PaymentDetails savedPaymentDetails = paymentDetailsRepository.save(paymentDetails);
+        Order order = orderRepository.getOne(paymentDetails.getDetails());
+        order.setStatus(OrderStatus.PAID);
+        orderRepository.save(order);
+        Customer customer = customerService.getCustomerById(order.getCustomerId());
+        Attachment attachment = attachmentService.createAttachment(savedPaymentDetails.toString()
+                , customer.getLogin() + order.getId() + ".txt");
+        notificationService.sendNotification(notificationService.configureNotificationMessage(customer,
+                order, NotificationMessage.PAID, attachment));
+    }
+
+    @Transactional
     @Scheduled(fixedDelay = 15000)
     public void sendOrderToCourierService() {
 
@@ -115,7 +134,7 @@ public class OrderService {
 
         if (!orders.isEmpty()) {
             for (Order order : orders) {
-                courierIntegrationService.sendOrderToCourierService(orderMapper.domainToDto(order));
+                courierService.sendOrderToCourierService(orderMapper.domainToDto(order));
                 order.setStatus(OrderStatus.IN_PROGRESS);
                 Customer customer = customerService.getCustomerById(order.getCustomerId());
                 orderRepository.save(order);

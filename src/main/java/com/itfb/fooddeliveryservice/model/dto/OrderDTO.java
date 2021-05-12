@@ -1,5 +1,6 @@
 package com.itfb.fooddeliveryservice.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.itfb.fooddeliveryservice.model.domain.order.OrderStatus;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class OrderDTO {
     private Long restaurantId;
     private String address;
     private OrderStatus status;
+    @JsonIgnore
     private LocalDateTime creationDate;
     private String doneDate;
     private double amount;

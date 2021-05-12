@@ -36,8 +36,4 @@ public class PaymentListenerConfig {
                 .with(routingKey);
     }
 
-    @Bean
-    public Jackson2JsonMessageConverter jacksonMessageConverter(){
-        return new Jackson2JsonMessageConverter();
-    }
 }

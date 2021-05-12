@@ -1,4 +1,4 @@
-package com.itfb.fooddeliveryservice.service;
+package com.itfb.fooddeliveryservice.service.courier;
 
 import com.itfb.fooddeliveryservice.model.domain.task.Task;
 import lombok.RequiredArgsConstructor;
