@@ -118,6 +118,7 @@ public class OrderService {
         PaymentDetails savedPaymentDetails = paymentDetailsRepository.save(paymentDetails);
         Order order = orderRepository.getOne(paymentDetails.getDetails());
         order.setStatus(OrderStatus.PAID);
+        order.setPaymentDetails(savedPaymentDetails);
         orderRepository.save(order);
         Customer customer = customerService.getCustomerById(order.getCustomerId());
         Attachment attachment = attachmentService.createAttachment(savedPaymentDetails.toString()

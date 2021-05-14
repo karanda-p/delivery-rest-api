@@ -19,8 +19,11 @@ public class ProductService {
 
     @Transactional
     public Collection<Product> getAllProductsByRestaurant(Long restaurantId) {
-
-        return productRepository.findAllByRestaurantId(restaurantId);
+        if (!productRepository.findAllByRestaurantId(restaurantId).isEmpty()){
+            return productRepository.findAllByRestaurantId(restaurantId);
+        } else {
+            throw new EntityNotFoundException(Message.RESTAURANT_NOT_FOUND, restaurantId);
+        }
     }
 
     @Transactional

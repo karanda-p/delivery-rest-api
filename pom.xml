@@ -25,6 +25,8 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <feign-okhttp.version>11.1</feign-okhttp.version>
         <feign-httpclient.version>11.1</feign-httpclient.version>
         <openapi-ui.version>1.5.7</openapi-ui.version>
+        <openapi-security.version>1.5.7</openapi-security.version>
+        <swagger-annotations.version>2.1.7</swagger-annotations.version>
     </properties>
 
     <dependencies>
@@ -136,6 +138,16 @@ http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${openapi-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>${openapi-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
         </dependency>
     </dependencies>
 

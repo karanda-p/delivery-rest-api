@@ -57,7 +57,8 @@ app:
       url: http://localhost:8082/courier-service
     notification:
       url: http://localhost:8083/notification-service
-
+  version: 1.0.0
+  description: Food Delivery Service
 message:
   courier-queue: fdsCourierQueue
   courier-routing-key: message.courier
