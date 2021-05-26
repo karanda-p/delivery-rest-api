@@ -4,7 +4,6 @@ import com.itfb.fooddeliveryservice.model.domain.Role;
 import com.itfb.fooddeliveryservice.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.itfb.fooddeliveryservice.model.domain.Role;
 
 import java.util.Optional;
 

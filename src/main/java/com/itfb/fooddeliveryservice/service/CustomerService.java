@@ -7,10 +7,7 @@ import com.itfb.fooddeliveryservice.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.itfb.fooddeliveryservice.model.domain.Customer;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

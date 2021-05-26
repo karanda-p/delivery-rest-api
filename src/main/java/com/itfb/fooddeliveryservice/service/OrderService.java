@@ -64,7 +64,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Order createNewOrder(String login, Order order) throws IOException {
+    public Order createNewOrder(String login, Order order) {
         Customer customer = customerService.getCustomerByLogin(login);
         if (customer.getCart() == null)
             throw new EntityNotFoundException(Message.CART_IS_EMPTY, login);

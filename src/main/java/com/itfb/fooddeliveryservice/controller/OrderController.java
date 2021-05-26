@@ -2,11 +2,10 @@ package com.itfb.fooddeliveryservice.controller;
 
 import com.itfb.fooddeliveryservice.mapper.common.OrderMapper;
 import com.itfb.fooddeliveryservice.model.domain.order.Order;
-import com.itfb.fooddeliveryservice.model.dto.CustomerDTO;
 import com.itfb.fooddeliveryservice.model.dto.OrderDTO;
 import com.itfb.fooddeliveryservice.repository.CustomerRepository;
 import com.itfb.fooddeliveryservice.security.Impl.UserDetailsImpl;
-import com.itfb.fooddeliveryservice.service.*;
+import com.itfb.fooddeliveryservice.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;

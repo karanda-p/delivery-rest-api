@@ -3,7 +3,6 @@ package com.itfb.fooddeliveryservice.controller;
 import com.itfb.fooddeliveryservice.mapper.common.CustomerMapper;
 import com.itfb.fooddeliveryservice.model.domain.Customer;
 import com.itfb.fooddeliveryservice.model.dto.CustomerDTO;
-import com.itfb.fooddeliveryservice.model.dto.RestaurantDTO;
 import com.itfb.fooddeliveryservice.security.Impl.UserDetailsImpl;
 import com.itfb.fooddeliveryservice.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;

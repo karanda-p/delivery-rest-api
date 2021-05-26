@@ -7,7 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+#    show-sql: true
   session:
     store-type: jdbc
   rabbitmq:
@@ -43,11 +43,11 @@ server:
     context-path: /food-delivery-service
   port: 8080
 
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        security: DEBUG
 
 app:
   integration:
@@ -67,3 +67,11 @@ message:
   notification-routing-key: message.notification
   fds-payment-routing-key: message.fds.payment
   fds-courier-routing-key: message.fds.courier
+
+camunda:
+  bpm:
+    admin-user:
+      id: demo
+      password: demo
+      firstName: Demo
+

@@ -1,9 +1,7 @@
 package com.itfb.fooddeliveryservice.model.notification;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.HashMap;

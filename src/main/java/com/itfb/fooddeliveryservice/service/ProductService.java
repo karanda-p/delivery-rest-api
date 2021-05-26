@@ -3,7 +3,6 @@ package com.itfb.fooddeliveryservice.service;
 import com.itfb.fooddeliveryservice.exception.EntityNotFoundException;
 import com.itfb.fooddeliveryservice.model.Message;
 import com.itfb.fooddeliveryservice.model.domain.Product;
-import com.itfb.fooddeliveryservice.model.domain.Restaurant;
 import com.itfb.fooddeliveryservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

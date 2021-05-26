@@ -4,7 +4,6 @@ import com.itfb.fooddeliveryservice.mapper.common.CartItemMapper;
 import com.itfb.fooddeliveryservice.model.domain.Product;
 import com.itfb.fooddeliveryservice.model.domain.cart.CartItem;
 import com.itfb.fooddeliveryservice.model.dto.CartItemDTO;
-import com.itfb.fooddeliveryservice.model.dto.CustomerDTO;
 import com.itfb.fooddeliveryservice.security.Impl.UserDetailsImpl;
 import com.itfb.fooddeliveryservice.service.CartService;
 import com.itfb.fooddeliveryservice.service.CustomerService;

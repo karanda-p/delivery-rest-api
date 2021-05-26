@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1e7dkcn" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="testProcess" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_14y0ixo" sourceRef="startEvent" targetRef="configMessage" />
+    <bpmn:serviceTask id="showMessage" name="Вывести сообщение" camunda:class="com.itfb.fooddeliveryservice.camunda.CamundaShowMessage">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="messageOut" />
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_07apsvn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1i7vn4v</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_07apsvn" sourceRef="configMessage" targetRef="showMessage" />
+    <bpmn:endEvent id="endEvent" name="Конец процесса">
+      <bpmn:incoming>Flow_1i7vn4v</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1i7vn4v" sourceRef="showMessage" targetRef="endEvent" />
+    <bpmn:serviceTask id="configMessage" name="Получить и обработать сообщение" camunda:class="com.itfb.fooddeliveryservice.camunda.CamundaGetMessage">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="startMessage" />
+          <camunda:outputParameter name="messageOut" />
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_14y0ixo</bpmn:incoming>
+      <bpmn:outgoing>Flow_07apsvn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="startEvent" name="Начало процесса">
+      <bpmn:outgoing>Flow_14y0ixo</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_1jqlu5z" />
+  <bpmn:message id="Message_1mnxvk5" />
+  <bpmn:message id="Message_1lyb4m8" name="startMessage" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="testProcess">
+      <bpmndi:BPMNEdge id="Flow_14y0ixo_di" bpmnElement="Flow_14y0ixo">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07apsvn_di" bpmnElement="Flow_07apsvn">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="420" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i7vn4v_di" bpmnElement="Flow_1i7vn4v">
+        <di:waypoint x="520" y="117" />
+        <di:waypoint x="582" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0wai7u5_di" bpmnElement="showMessage">
+        <dc:Bounds x="420" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0stsxt7_di" bpmnElement="endEvent">
+        <dc:Bounds x="582" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="559" y="142" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_124dlrm_di" bpmnElement="configMessage">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05dxa6e_di" bpmnElement="startEvent">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="152" y="142" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

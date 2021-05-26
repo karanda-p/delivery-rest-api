@@ -1,7 +1,6 @@
 package com.itfb.fooddeliveryservice.model.domain.cart;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,8 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "cart")
-@Getter
-@Setter
+@Data
 public class Cart {
 
     @Id
@@ -22,6 +20,7 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
+
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
